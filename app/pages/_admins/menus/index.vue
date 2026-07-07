@@ -150,7 +150,7 @@ provide('menuTableRegistry', { registerTable, unregisterTable })
 <template>
     <div class="space-y-md">
         <div class="flex items-center justify-between">
-            <!-- <h1 class="text-headline-lg text-on-surface">Manajemen Menu</h1> -->
+            <h1 class="text-headline-lg text-on-surface">Manajemen Menu</h1>
             <button @click="formDialogRef.open('create')"
                 class="flex items-center gap-2 bg-secondary text-on-secondary rounded px-6 py-3">
                 <Icon name="lucide:plus" size="18" />

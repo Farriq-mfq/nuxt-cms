@@ -9,6 +9,7 @@ export const createMenuSchema = z.object({
     })
     .int()
     .positive()
+    .nullable()
     .optional(),
   title: z.string().trim().min(1, "Judul tidak boleh kosong").max(255),
   url: z.string().trim().max(500).optional(),
