@@ -2,7 +2,7 @@
 interface FieldConfig {
     name: string
     label: string
-    type: 'text' | 'password' | 'number' | 'textarea' | 'select' | 'combobox' | 'checkbox' | 'date' | 'icon'
+    type: 'text' | 'password' | 'number' | 'textarea' | 'select' | 'combobox' | 'checkbox' | 'date' | 'icon' | 'editor'
     required?: boolean
     placeholder?: string
     options?: { label: string; value: any }[]
@@ -23,6 +23,8 @@ const props = defineProps<{
 function fieldError(name: string) {
     return props.fieldErrors[name]
 }
+
+
 </script>
 
 <template>
@@ -66,6 +68,9 @@ function fieldError(name: string) {
 
             <AdminFormIconPicker v-else-if="field.type === 'icon'" v-model="formData[field.name]"
                 :disabled="isSubmitting" :placeholder="field.placeholder" />
+
+            <AdminFormEditor v-else-if="field.type === 'editor'" v-model="formData[field.name]" :disabled="isSubmitting"
+                :placeholder="field.placeholder" />
 
             <p v-if="fieldError(field.name)" class="text-label-md text-error mt-1">
                 {{ fieldError(field.name) }}

@@ -112,7 +112,7 @@ defineExpose({ resetForm: initForm })
         </div>
 
         <AdminFormFields :fields="fields" :form-data="formData" :field-errors="fieldErrors"
-            :is-submitting="isSubmitting" />
+            :is-submitting="isSubmitting" ref="formFieldsRef" />
 
         <div class="flex items-center justify-end gap-2 pt-sm">
             <button v-if="showCancel" type="button" :disabled="isSubmitting"

@@ -6,8 +6,8 @@ const router = useRouter()
 
 const fields = [
     { name: 'title', label: 'Judul', type: 'text', required: true },
-    { name: 'content', label: 'Konten', type: 'textarea', required: true },
     { name: 'isPublished', label: 'Terbit', type: 'checkbox', required: false },
+    { name: 'content', label: 'Konten', type: 'editor', required: true },
 ]
 
 function handleSuccess(result: any) {
