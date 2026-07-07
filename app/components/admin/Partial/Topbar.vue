@@ -4,9 +4,9 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 const { isOpen, toggle } = useSidebar()
 const route = useRoute()
 
-const pageTitle = computed(() => {
-    return (route.meta.title as string) ?? route.name?.toString().split('-').join(' ') ?? 'Dashboard'
-})
+// const pageTitle = computed(() => {
+//     return (route.meta.title as string) ?? route.name?.toString().split('-').join(' ') ?? 'Dashboard'
+// })
 
 async function handleLogout() {
     await $fetch('/api/auth/logout', { method: 'POST' })
@@ -23,7 +23,7 @@ async function handleLogout() {
                 @click="toggle">
                 <Icon name="lucide:menu" size="20" />
             </button>
-            <h1 class="text-headline-md text-on-surface capitalize">{{ pageTitle }}</h1>
+            <!-- <h1 class="text-headline-md text-on-surface capitalize">{{ pageTitle }}</h1> -->
         </div>
 
         <div class="flex items-center gap-4">

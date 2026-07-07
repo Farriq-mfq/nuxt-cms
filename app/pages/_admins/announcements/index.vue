@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-    <p>Ini Halaman Pubolic</p>
+    <p>ini halaman announcemenet</p>
 </template>

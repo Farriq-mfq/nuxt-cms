@@ -10,21 +10,21 @@ const menuItems: MenuItem[] = [
     { label: 'Dashboard', icon: 'lucide:layout-dashboard', to: '/_admins' },
     { label: 'Menu', icon: 'lucide:menu', to: '/_admins/menus' },
     {
-        label: 'Media',
-        icon: 'lucide:image',
+        label: 'Konten',
+        icon: 'lucide:file-text',
         children: [
-            { label: 'Images', icon: 'lucide:image', to: '/_admins/images' },
-            { label: 'Files', icon: 'lucide:file', to: '/_admins/files' },
-            { label: 'Albums', icon: 'lucide:folder-open', to: '/_admins/albums' },
+            { label: 'Halaman', icon: 'lucide:file-text', to: '/_admins/pages' },
+            { label: 'Berita', icon: 'lucide:newspaper', to: '/_admins/news' },
+            { label: 'Pengumuman', icon: 'lucide:megaphone', to: '/_admins/announcements' },
         ],
     },
     {
-        label: 'Content',
-        icon: 'lucide:file-text',
+        label: 'Media',
+        icon: 'lucide:image',
         children: [
-            { label: 'Pages', icon: 'lucide:file-text', to: '/_admins/pages' },
-            { label: 'News', icon: 'lucide:newspaper', to: '/_admins/news' },
-            { label: 'Announcements', icon: 'lucide:megaphone', to: '/_admins/announcements' },
+            { label: 'Gambar', icon: 'lucide:image', to: '/_admins/images' },
+            { label: 'File', icon: 'lucide:file', to: '/_admins/files' },
+            { label: 'Albums', icon: 'lucide:folder-open', to: '/_admins/albums' },
         ],
     },
     { label: 'Related Link', icon: 'lucide:link', to: '/_admins/related-links' },
@@ -102,7 +102,7 @@ watchEffect(() => {
                         ]" @click="toggleGroup(item.label)">
                         <Icon :name="item.icon ?? 'lucide:circle'" size="18" class="shrink-0" />
                         <span v-if="isOpen" class="flex-1 text-left whitespace-nowrap overflow-hidden">{{ item.label
-                        }}</span>
+                            }}</span>
                         <Icon v-if="isOpen" name="lucide:chevron-right" size="16" class="transition-transform shrink-0"
                             :class="isGroupOpen(item) && 'rotate-90'" />
                     </button>

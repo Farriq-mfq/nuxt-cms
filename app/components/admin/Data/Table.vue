@@ -33,12 +33,16 @@ const props = withDefaults(defineProps<{
     searchPlaceholder?: string
     emptyMessage?: string
     extraQuery?: Record<string, any>
+    expandable?: boolean
+    rowKey?: string
 }>(), {
     limit: 10,
     defaultSortOrder: 'desc',
     searchable: true,
     searchPlaceholder: 'Cari data...',
     emptyMessage: 'Tidak ada data untuk ditampilkan',
+    expandable: false,
+    rowKey: 'id',
 })
 
 const page = ref(1)
@@ -66,7 +70,7 @@ const queryParams = computed(() => ({
     ...props.extraQuery,
 }))
 
-const { data, pending, error, refresh } = await useFetch<ApiResponse>(
+const { data, pending, error, refresh } = useFetch<ApiResponse>(
     () => props.endpoint,
     { query: queryParams, watch: [queryParams] }
 )
@@ -107,6 +111,32 @@ const paginationRange = computed(() => {
     return range
 })
 
+const expandedRows = ref<Set<any>>(new Set())
+
+function rowIdentifier(row: Record<string, any>, index: number) {
+    return row[props.rowKey] ?? index
+}
+
+function toggleExpand(row: Record<string, any>, index: number) {
+    const key = rowIdentifier(row, index)
+    if (expandedRows.value.has(key)) {
+        expandedRows.value.delete(key)
+    } else {
+        expandedRows.value.add(key)
+    }
+    expandedRows.value = new Set(expandedRows.value)
+}
+
+function isExpanded(row: Record<string, any>, index: number) {
+    return expandedRows.value.has(rowIdentifier(row, index))
+}
+
+const colCount = computed(() => props.columns.length + (props.expandable ? 1 : 0))
+
+watch(rows, () => {
+    expandedRows.value = new Set()
+})
+
 defineExpose({ refresh })
 </script>
 
@@ -140,6 +170,7 @@ defineExpose({ refresh })
                 <table class="w-full text-left">
                     <thead class="bg-surface-container-low border-b border-outline-variant">
                         <tr>
+                            <th v-if="expandable" class="w-10 px-md py-sm"></th>
                             <th v-for="column in columns" :key="column.key"
                                 :style="column.width ? { width: column.width } : {}"
                                 class="px-md py-sm text-label-md uppercase tracking-wide text-on-surface-variant select-none"
@@ -160,7 +191,7 @@ defineExpose({ refresh })
 
                     <tbody>
                         <tr v-if="pending">
-                            <td :colspan="columns.length" class="px-md py-lg text-center body-md">
+                            <td :colspan="colCount" class="px-md py-lg text-center body-md">
                                 <div class="flex items-center justify-center gap-2 text-on-surface-variant">
                                     <Icon name="lucide:loader-2" size="18" class="animate-spin" />
                                     Memuat data...
@@ -169,7 +200,7 @@ defineExpose({ refresh })
                         </tr>
 
                         <tr v-else-if="!rows.length">
-                            <td :colspan="columns.length" class="px-md py-lg text-center body-md">
+                            <td :colspan="colCount" class="px-md py-lg text-center body-md">
                                 <div class="flex flex-col items-center justify-center gap-2 text-on-surface-variant">
                                     <Icon name="lucide:inbox" size="28" class="opacity-50" />
                                     <span>{{ emptyMessage }}</span>
@@ -177,16 +208,32 @@ defineExpose({ refresh })
                             </td>
                         </tr>
 
-                        <tr v-else v-for="(row, index) in rows" :key="row.id ?? index"
-                            class="border-b border-outline-variant last:border-b-0 hover:bg-surface-container-low transition-colors">
-                            <td v-for="column in columns" :key="column.key" class="px-md py-sm body-md text-on-surface"
-                                :class="[column.align === 'center' && 'text-center', column.align === 'right' && 'text-right']">
-                                <slot :name="`cell-${column.key}`" :row="row" :value="row[column.key]"
-                                    :refresh="refresh">
-                                    {{ row[column.key] }}
-                                </slot>
-                            </td>
-                        </tr>
+                        <template v-else v-for="(row, index) in rows" :key="row[rowKey] ?? index">
+                            <tr class="border-b border-outline-variant last:border-b-0 hover:bg-surface-container-low transition-colors"
+                                :class="expandable && 'cursor-pointer'" @click="expandable && toggleExpand(row, index)">
+                                <td v-if="expandable" class="px-md py-sm w-10">
+                                    <Icon name="lucide:chevron-right" size="16"
+                                        class="text-on-surface-variant transition-transform"
+                                        :class="isExpanded(row, index) && 'rotate-90'" />
+                                </td>
+                                <td v-for="column in columns" :key="column.key"
+                                    class="px-md py-sm body-md text-on-surface"
+                                    :class="[column.align === 'center' && 'text-center', column.align === 'right' && 'text-right']"
+                                    @click.stop="column.key === '__actions' && undefined">
+                                    <slot :name="`cell-${column.key}`" :row="row" :value="row[column.key]"
+                                        :refresh="refresh">
+                                        {{ row[column.key] }}
+                                    </slot>
+                                </td>
+                            </tr>
+
+                            <tr v-if="expandable && isExpanded(row, index)"
+                                class="border-b border-outline-variant last:border-b-0">
+                                <td :colspan="colCount" class="px-md py-md bg-surface-container-lowest">
+                                    <slot name="expander" :row="row" :refresh="refresh" />
+                                </td>
+                            </tr>
+                        </template>
                     </tbody>
                 </table>
             </div>

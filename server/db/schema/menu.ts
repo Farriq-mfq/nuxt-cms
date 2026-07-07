@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+  bigint,
   boolean,
   int,
   mysqlEnum,
@@ -7,13 +8,16 @@ import {
   serial,
   timestamp,
   varchar,
+  type AnyMySqlColumn,
 } from "drizzle-orm/mysql-core";
 
 export const menus = mysqlTable("menus", {
   id: serial("id").primaryKey(),
-  parentId: int("parent_id"),
+  parentId: bigint("parent_id", { mode: "number", unsigned: true }).references(
+    (): AnyMySqlColumn => menus.id,
+    { onDelete: "set null" },
+  ),
   title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull(),
   url: varchar("url", { length: 500 }),
   icon: varchar("icon", { length: 100 }),
   order: int("order").default(0).notNull(),

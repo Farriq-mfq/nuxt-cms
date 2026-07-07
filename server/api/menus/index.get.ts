@@ -1,12 +1,12 @@
-import { or, like, desc, asc } from "drizzle-orm";
-import { news } from "~~/server/db/schema/news";
+import { and, asc, desc, isNull, like, or } from "drizzle-orm";
 import { db } from "~~/server/db";
+import { menus } from "~~/server/db/schema";
 import { paginationQuerySchema } from "~~/server/validators/pagination";
 
 const SORTABLE_COLUMNS = {
-  createdAt: news.createdAt,
-  publishedAt: news.publishedAt,
-  title: news.title,
+  name: menus.title,
+  createdAt: menus.createdAt,
+  order: menus.order,
 } as const;
 
 export default defineEventHandler(async (event) => {
@@ -14,30 +14,33 @@ export default defineEventHandler(async (event) => {
   if (!parsed.success) return zodErrorResponse(parsed.error);
 
   const { page, limit, search, sortBy, sortOrder } = parsed.data;
+
   const sortColumn =
-    SORTABLE_COLUMNS[sortBy as keyof typeof SORTABLE_COLUMNS] ?? news.createdAt;
+    SORTABLE_COLUMNS[sortBy as keyof typeof SORTABLE_COLUMNS] ??
+    menus.createdAt;
+
   const orderFn = sortOrder === "asc" ? asc : desc;
+
   const where = search
-    ? or(like(news.title, `%${search}%`), like(news.excerpt, `%${search}%`))
-    : undefined;
+    ? and(or(like(menus.title, `%${search}%`)), isNull(menus.parentId))
+    : isNull(menus.parentId);
 
   const { items, total } = await getPaginatedResult({
-    queryable: db.query.news,
-    table: news,
+    queryable: db.query.menus,
+    with: {
+      parent: true,
+      children: true,
+    },
+    table: menus,
     where,
     orderBy: orderFn(sortColumn),
-    with: {
-      category: true,
-      thumbnail: true,
-      author: { columns: { password: false } },
-    },
     page,
     limit,
   });
 
   return successResponse(
     items,
-    "news fetched successfully",
+    "Daftar menu",
     buildPaginationMeta(page, limit, total),
   );
 });

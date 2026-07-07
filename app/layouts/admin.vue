@@ -1,5 +1,10 @@
 <script setup lang="ts">
 const { isOpen } = useSidebar()
+useHead({
+    titleTemplate: (titleChunk) => {
+        return titleChunk ? `${titleChunk} | Admin Panel` : 'Admin Panel'
+    }
+})
 </script>
 
 <template>
@@ -13,5 +18,6 @@ const { isOpen } = useSidebar()
                 <slot />
             </main>
         </div>
+        <AdminBaseConfirmDialog />
     </div>
 </template>

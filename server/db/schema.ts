@@ -1,6 +1,6 @@
 import { _admins } from "./schema/auth";
 import { setting } from "./schema/setting";
-import { menus } from "./schema/menu";
+import { menus, menusRelations } from "./schema/menu";
 import { files } from "./schema/files";
 import { images } from "./schema/images";
 import {
@@ -18,6 +18,7 @@ export {
   _admins,
   setting,
   menus,
+  menusRelations,
   files,
   images,
   albums,

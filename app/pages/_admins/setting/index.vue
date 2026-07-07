@@ -3,6 +3,7 @@ definePageMeta({
     layout: 'admin'
 })
 </script>
+
 <template>
-    <p>Halaman News</p>
+    <p>ini Halaman setting</p>
 </template>
