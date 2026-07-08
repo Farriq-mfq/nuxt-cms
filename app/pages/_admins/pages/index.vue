@@ -32,8 +32,8 @@ const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
 </script>
 
 <template>
-    <AdminDataTable ref="tableRef" endpoint="/api/pages" :columns="columns" :search-placeholder="'Cari Halaman...'"
-        default-sort-by="created_at" default-sort-order="desc" row-key="id">
+    <AdminDataTable ref="tableRef" endpoint="/api/_admins/pages" :columns="columns"
+        :search-placeholder="'Cari Halaman...'" default-sort-by="created_at" default-sort-order="desc" row-key="id">
         <template #toolbar>
             <button @click="$router.push('/_admins/pages/create')"
                 class="flex items-center gap-2 bg-secondary text-on-secondary rounded px-6 py-3">

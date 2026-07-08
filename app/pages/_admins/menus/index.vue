@@ -42,7 +42,7 @@ const modes = {
                 name: 'parentId',
                 label: 'Menu Induk (opsional)',
                 type: 'combobox',
-                apiUrl: '/api/select/menus',
+                apiUrl: '/api/_admins/select/menus',
                 searchableColumns: ['title'],
                 multi: false,
                 required: false,
@@ -85,7 +85,7 @@ const modes = {
                 name: 'parentId',
                 label: 'Menu Induk (opsional)',
                 type: 'combobox',
-                apiUrl: '/api/select/menus',
+                apiUrl: '/api/_admins/select/menus',
                 searchableColumns: ['title'],
                 multi: false,
                 required: false,
@@ -149,7 +149,7 @@ provide('menuTableRegistry', { registerTable, unregisterTable })
 
 <template>
     <div class="space-y-md">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between flex-wrap gap-4">
             <h1 class="text-headline-lg text-on-surface">Manajemen Menu</h1>
             <button @click="formDialogRef.open('create')"
                 class="flex items-center gap-2 bg-secondary text-on-secondary rounded px-6 py-3">
@@ -158,7 +158,7 @@ provide('menuTableRegistry', { registerTable, unregisterTable })
             </button>
         </div>
 
-        <AdminMenuTable endpoint="/api/menus" :columns="columns" search-placeholder="Cari Menu..." />
+        <AdminMenuTable endpoint="/api/_admins/menus" :columns="columns" search-placeholder="Cari Menu..." />
 
         <AdminFormDialog ref="formDialogRef" title="Form Menu" :modes="modes" @refresh="refreshAll" />
     </div>

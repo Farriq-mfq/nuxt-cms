@@ -1,5 +1,5 @@
 :root,
-[data-theme="academic-precision"] {
+[data-theme="default"] {
   --color-surface: 250 249 253;
   --color-surface-dim: 218 217 221;
   --color-surface-bright: 250 249 253;
@@ -37,7 +37,7 @@
 }
 
 
-[data-theme="academic-precision-dark"] {
+[data-theme="default-dark"] {
   --color-surface: 18 19 21;
   --color-surface-dim: 18 19 21;
   --color-surface-bright: 62 64 67;

@@ -1,39 +1,6 @@
-export type ThemeName =
-  | "academic-precision"
-  | "academic-precision-dark"
-  | "forest"
-  | "forest-dark"
-  | "sunset"
-  | "sunset-dark"
-  | "ocean"
-  | "ocean-dark"
-  | "rose"
-  | "rose-dark"
-  | "lavender"
-  | "lavender-dark"
-  | "slate"
-  | "slate-dark"
-  | "crimson"
-  | "crimson-dark"
-  | "amber"
-  | "amber-dark"
-  | "high-contrast"
-  | "high-contrast-dark"
-  | "indigo"
-  | "indigo-dark"
-  | "emerald"
-  | "emerald-dark"
-  | "coral"
-  | "coral-dark"
-  | "plum"
-  | "plum-dark"
-  | "steel"
-  | "steel-dark"
-  | "olive"
-  | "olive-dark";
-
+import { type ThemeName } from "~~/server/utils/theme";
 export function useTheme() {
-  const theme = useState<ThemeName>("app-theme", () => "academic-precision");
+  const theme = useState<ThemeName>("app-theme", () => "default");
 
   function setTheme(name: ThemeName) {
     theme.value = name;

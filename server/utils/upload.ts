@@ -1,4 +1,4 @@
-import { writeFile, mkdir } from "node:fs/promises";
+import { writeFile, mkdir, unlink } from "node:fs/promises";
 import { join, extname } from "node:path";
 import { nanoid } from "nanoid";
 import {
@@ -6,6 +6,7 @@ import {
   generateThumbnail,
   type ImageProcessOptions,
 } from "./image-processor";
+import sharp from "sharp";
 
 const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
@@ -18,6 +19,17 @@ const ALLOWED_FILE_TYPES = [
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ];
+
+interface AssetUploadResult {
+  path: string;
+}
+
+const ALLOWED_ICON_TYPES = [
+  "image/x-icon",
+  "image/png",
+  "image/vnd.microsoft.icon",
+];
+
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 interface UploadResult {
@@ -117,4 +129,71 @@ async function saveRawFile(
     mimeType: file.type!,
     size: file.data.length,
   };
+}
+
+export async function saveAssetImage(
+  file: { filename?: string; type?: string; data: Buffer },
+  subDir: string = "images",
+): Promise<AssetUploadResult> {
+  if (!file.type || !ALLOWED_IMAGE_TYPES.includes(file.type)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: `Tipe gambar tidak diizinkan: ${file.type}`,
+    });
+  }
+
+  if (file.data.length > MAX_SIZE) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Ukuran gambar melebihi batas 5MB",
+    });
+  }
+
+  const processed = await sharp(file.data)
+    .rotate() // auto-orient + strip EXIF
+    .resize(1200, 1200, { fit: "inside", withoutEnlargement: true })
+    .webp({ quality: 80 })
+    .toBuffer();
+
+  const uniqueName = `${nanoid()}.webp`;
+  const uploadDir = join(process.cwd(), "public", "assets", subDir);
+
+  await mkdir(uploadDir, { recursive: true });
+  await writeFile(join(uploadDir, uniqueName), processed);
+
+  return { path: `/assets/${subDir}/${uniqueName}` };
+}
+
+export async function saveAssetRaw(
+  file: { filename?: string; type?: string; data: Buffer },
+  subDir: string = "favicon",
+): Promise<AssetUploadResult> {
+  if (!file.type || !ALLOWED_ICON_TYPES.includes(file.type)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: `Tipe favicon tidak diizinkan: ${file.type}`,
+    });
+  }
+
+  if (file.data.length > MAX_SIZE) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Ukuran favicon melebihi batas 5MB",
+    });
+  }
+
+  const ext = extname(file.filename || "") || ".ico";
+  const uniqueName = `${nanoid()}${ext}`;
+  const uploadDir = join(process.cwd(), "public", "assets", subDir);
+
+  await mkdir(uploadDir, { recursive: true });
+  await writeFile(join(uploadDir, uniqueName), file.data);
+
+  return { path: `/assets/${subDir}/${uniqueName}` };
+}
+
+export async function deleteAssetFile(path: string) {
+  try {
+    await unlink(join(process.cwd(), "public", path));
+  } catch {}
 }

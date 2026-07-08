@@ -17,6 +17,7 @@
     "@headlessui/vue": "^1.7.23",
     "@nuxt/icon": "2.3.1",
     "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/sitemap": "^8.2.2",
     "@tiptap/extension-character-count": "^3.27.2",
     "@tiptap/extension-color": "^3.27.2",
     "@tiptap/extension-highlight": "^3.27.2",

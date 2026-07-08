@@ -1,13 +1,11 @@
 <script setup lang="ts">
 const { isOpen } = useSidebar()
-const appConfig = useAppConfig()
 useHead({
-    titleTemplate: (titleChunk) => {
-        return titleChunk ? `${titleChunk} | ${appConfig.app.name}` : appConfig.app.name
-    }
+    meta: [
+        { name: 'robots', content: 'noindex, nofollow' },
+    ],
 })
 </script>
-
 <template>
     <div class="min-h-screen bg-surface-container-lowest">
         <AdminPartialSidebar />

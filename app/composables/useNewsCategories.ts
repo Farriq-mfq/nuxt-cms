@@ -4,7 +4,7 @@ import type {
 } from "~~/server/validators/news-category";
 
 export function createNewsCategories(payload: CreateNewsCategorySchema) {
-  return $fetch("/api/news-categories", {
+  return $fetch("/api/_admins/news-categories", {
     method: "POST",
     body: payload,
   });
@@ -15,14 +15,14 @@ export function updateNewsCategories(payload: {
   data: UpdateNewsCategorySchema;
 }) {
   console.log(payload);
-  return $fetch(`/api/news-categories/${payload.id}`, {
+  return $fetch(`/api/_admins/news-categories/${payload.id}`, {
     method: "PATCH",
     body: payload.data,
   });
 }
 
 export function deleteNewsCategories(id: number) {
-  return $fetch(`/api/news-categories/${id}`, {
+  return $fetch(`/api/_admins/news-categories/${id}`, {
     method: "DELETE",
   });
 }

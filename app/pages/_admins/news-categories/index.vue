@@ -63,7 +63,7 @@ const {
 </script>
 
 <template>
-    <AdminDataTable ref="tableRef" endpoint="/api/news-categories" :columns="columns"
+    <AdminDataTable ref="tableRef" endpoint="/api/_admins/news-categories" :columns="columns"
         :search-placeholder="'Cari Kategori Berita...'" row-key="id">
         <template #toolbar>
             <button @click="formDialogRef.open('create')" type="button"

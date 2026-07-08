@@ -77,7 +77,7 @@ async function remove() {
     isDeleting.value = true
 
     try {
-        await $fetch(`/api/upload/image/${imageId}`, { method: 'DELETE' })
+        await $fetch(`/api/_admins/upload/image/${imageId}`, { method: 'DELETE' })
         toast.success({ title: 'Berhasil', message: 'Gambar berhasil dihapus' })
         props.deleteNode()
     } catch (err: any) {

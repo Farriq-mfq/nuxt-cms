@@ -12,7 +12,7 @@ export function createPage(payload: Record<string, any>) {
     formData.append("meta_image", payload.meta_image);
   }
 
-  return $fetch("/api/pages", {
+  return $fetch("/api/_admins/pages", {
     method: "POST",
     body: formData,
   });
@@ -36,12 +36,12 @@ export function updatePage(payload: Record<string, any>) {
     formData.append("meta_image", data.meta_image);
   }
 
-  return $fetch(`/api/pages/${id}`, {
+  return $fetch(`/api/_admins/pages/${id}`, {
     method: "PATCH",
     body: formData,
   });
 }
 
 export function deletePage(id: number) {
-  return $fetch(`/api/pages/${id}`, { method: "DELETE" });
+  return $fetch(`/api/_admins/pages/${id}`, { method: "DELETE" });
 }

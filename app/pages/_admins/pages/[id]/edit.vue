@@ -21,7 +21,7 @@ const {
     data: page,
     pending: pagePending,
     error: pageError
-} = await useFetch(`/api/pages/${route.params.id}`)
+} = await useFetch(`/api/_admins/pages/${route.params.id}`)
 
 if (pageError.value) {
     throw createError({

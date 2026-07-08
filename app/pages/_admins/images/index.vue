@@ -17,7 +17,7 @@ async function handleUpload() {
 
     uploading.value = true
     try {
-        const res = await $fetch('/api/upload/image', {
+        const res = await $fetch('/api/_admins/upload/image', {
             method: 'POST',
             body: formData,
         })

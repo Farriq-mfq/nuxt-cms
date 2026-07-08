@@ -8,21 +8,21 @@ interface UpdateMenuPayloadWithId {
 }
 
 export function createMenu(payload: CreateMenuPayload) {
-  return $fetch("/api/menus", {
+  return $fetch("/api/_admins/menus", {
     method: "POST",
     body: payload,
   });
 }
 
 export function updateMenu(payload: UpdateMenuPayloadWithId) {
-  return $fetch(`/api/menus/${payload.id}`, {
+  return $fetch(`/api/_admins/menus/${payload.id}`, {
     method: "PATCH",
     body: payload.data,
   });
 }
 
 export function deleteMenu(id: number) {
-  return $fetch(`/api/menus/${id}`, {
+  return $fetch(`/api/_admins/menus/${id}`, {
     method: "DELETE",
   });
 }

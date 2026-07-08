@@ -55,7 +55,7 @@ defineExpose({ refresh: selfInstance.refresh })
         </template>
 
         <template #expander="{ row }">
-            <AdminMenuTable :endpoint="`/api/menus/${row.id}`" :columns="columns"
+            <AdminMenuTable :endpoint="`/api/_admins/menus/${row.id}`" :columns="columns"
                 search-placeholder="Cari Submenu..." />
         </template>
     </AdminDataTable>

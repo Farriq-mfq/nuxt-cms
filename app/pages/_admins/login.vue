@@ -5,7 +5,8 @@ definePageMeta({
 
 useHead({ title: 'Login' })
 
-const appConfig = useAppConfig()
+const { setting } = useSetting()
+
 
 const { fetch: refreshSession } = useUserSession()
 const router = useRouter()
@@ -26,7 +27,7 @@ async function handleSubmit() {
     isSubmitting.value = true
 
     try {
-        await $fetch('/api/auth/login', {
+        await $fetch('/api/_admins/auth/login', {
             method: 'POST',
             body: { username: username.value, password: password.value },
         })
@@ -51,7 +52,7 @@ async function handleSubmit() {
     <div>
         <div class="mb-md text-center">
             <h1 class="text-headline-md text-on-surface">
-                {{ appConfig.app.name }}
+                {{ setting?.appName }}
             </h1>
             <p class="text-body-md text-on-surface-variant mt-1">Silakan login untuk melanjutkan</p>
         </div>

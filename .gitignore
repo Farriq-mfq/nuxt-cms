@@ -28,3 +28,7 @@ public/uploads/images/*
 public/uploads/files/*
 !public/uploads/images/.gitkeep
 !public/uploads/files/.gitkeep
+public/assets/favicon/*
+public/assets/images/*
+!public/assets/favicon/.gitkeep
+!public/assets/images/.gitkeep

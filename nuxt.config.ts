@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "nuxt-toast",
     "nuxt-auth-utils",
+    "@nuxtjs/sitemap",
   ],
   css: ["~/assets/css/themes.css"],
   googleFonts: {
@@ -22,5 +23,19 @@ export default defineNuxtConfig({
     tsConfig: {
       include: ["../types/**/*.d.ts"],
     },
+  },
+  routeRules: {
+    "/_admins/**": {
+      headers: {
+        "X-Robots-Tag": "noindex, nofollow, noarchive",
+      },
+    },
+  },
+  site: {
+    url: process.env.NUXT_PUBLIC_BASE_URL,
+    name: process.env.NUXT_PUBLIC_APP_NAME,
+  },
+  sitemap: {
+    exclude: ["/_admins/**"],
   },
 });

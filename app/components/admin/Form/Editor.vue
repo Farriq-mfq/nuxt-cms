@@ -186,7 +186,7 @@ async function uploadAndInsert(file: File) {
         const formData = new FormData()
         formData.append('file', file)
 
-        const res = await $fetch<{ success: boolean; data: { id: number; path: string } }>('/api/upload/image', {
+        const res = await $fetch<{ success: boolean; data: { id: number; path: string } }>('/api/_admins/upload/image', {
             method: 'POST',
             body: formData,
         })

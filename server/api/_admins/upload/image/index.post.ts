@@ -1,7 +1,7 @@
 import { images } from "~~/server/db/schema/images";
 import { db } from "~~/server/db";
-import { saveUploadedFile } from "../../../utils/upload";
 import { imageUploadSchema } from "~~/server/validators/upload";
+import { saveUploadedFile } from "~~/server/utils/upload";
 
 export default defineEventHandler(async (event) => {
   const formData = await readMultipartFormData(event);

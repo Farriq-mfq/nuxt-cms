@@ -3,10 +3,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 const { isOpen, toggle } = useSidebar()
 const route = useRoute()
-
-const pageTitle = computed(() => {
-    return (route.meta.title as string) ?? route.name?.toString().split('-').join(' ') ?? 'Dashboard'
-})
+const { user } = useUserSession()
 
 const { clear: clearSession } = useUserSession()
 const toast = useToast()
@@ -16,7 +13,7 @@ async function handleLogout() {
     isLoggingOut.value = true
 
     try {
-        await $fetch('/api/auth/logout', { method: 'POST' })
+        await $fetch('/api/_admins/auth/logout', { method: 'POST' })
     } catch (err) {
         console.error('Logout endpoint error:', err)
     }
@@ -36,22 +33,15 @@ async function handleLogout() {
                 @click="toggle">
                 <Icon name="lucide:menu" size="20" />
             </button>
-            <h1 class="text-headline-md text-inverse-surface capitalize">{{ pageTitle }}</h1>
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="button"
-                class="relative p-2 rounded hover:bg-surface-container-low transition-colors text-on-surface-variant">
-                <Icon name="lucide:bell" size="20" />
-                <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error"></span>
-            </button>
-
             <Menu as="div" class="relative">
                 <MenuButton
                     class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-surface-container-low transition-colors">
                     <div
                         class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-label-md font-semibold">
-                        A
+                        {{ user?.name?.charAt(0).toUpperCase() }}
                     </div>
                     <Icon name="lucide:chevron-down" size="16" class="text-on-surface-variant" />
                 </MenuButton>
