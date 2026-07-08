@@ -1,8 +1,9 @@
 <script setup lang="ts">
 const { isOpen } = useSidebar()
+const appConfig = useAppConfig()
 useHead({
     titleTemplate: (titleChunk) => {
-        return titleChunk ? `${titleChunk} | Admin Panel` : 'Admin Panel'
+        return titleChunk ? `${titleChunk} | ${appConfig.app.name}` : appConfig.app.name
     }
 })
 </script>

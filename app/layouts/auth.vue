@@ -1,6 +1,7 @@
 <script setup lang="ts">
+const appConfig = useAppConfig()
 useHead({
-    titleTemplate: (title) => title ? `${title} · Auth` : 'Auth',
+    titleTemplate: (title) => title ? `${title} · ${appConfig.app.name}` : appConfig.app.name,
 })
 </script>
 
@@ -12,7 +13,7 @@ useHead({
             </div>
 
             <p class="text-center text-label-md text-on-surface-variant mt-md">
-                © {{ new Date().getFullYear() }} Me
+                ©{{ new Date().getFullYear() }} {{ appConfig.app.name }}
             </p>
         </div>
     </div>

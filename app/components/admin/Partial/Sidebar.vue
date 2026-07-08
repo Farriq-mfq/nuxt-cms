@@ -35,6 +35,7 @@ const menuItems: MenuItem[] = [
     { label: 'Related Link', icon: 'lucide:link', to: '/_admins/related-links' },
     { label: 'Setting', icon: 'lucide:settings', to: '/_admins/setting' },
 ]
+const appConfig = useAppConfig()
 
 const EXACT_MATCH_PATHS = ['/_admins', '/']
 
@@ -87,8 +88,8 @@ watchEffect(() => {
         :class="isOpen ? 'w-64' : 'w-16'">
         <div class="h-16 flex items-center border-b border-surface/10 shrink-0"
             :class="isOpen ? 'justify-between px-md' : 'justify-center'">
-            <span v-if="isOpen" class="text-headline-md font-bold surfacespace-nowrap overflow-hidden">
-                Admin Panel
+            <span v-if="isOpen" class="text-md font-bold surfacespace-nowrap overflow-hidden uppercase">
+                {{ appConfig.app.name }} Panel
             </span>
             <button type="button" class="p-1.5 rounded hover:bg-surface/10 transition-colors" @click="toggle">
                 <Icon :name="isOpen ? 'lucide:panel-left-close' : 'lucide:panel-left-open'" size="20" />
@@ -115,7 +116,7 @@ watchEffect(() => {
                         ]" @click="toggleGroup(item.label)">
                         <Icon :name="item.icon ?? 'lucide:circle'" size="18" class="shrink-0" />
                         <span v-if="isOpen" class="flex-1 text-left surfacespace-nowrap overflow-hidden">{{ item.label
-                        }}</span>
+                            }}</span>
                         <Icon v-if="isOpen" name="lucide:chevron-right" size="16" class="transition-transform shrink-0"
                             :class="isGroupOpen(item) && 'rotate-90'" />
                     </button>
