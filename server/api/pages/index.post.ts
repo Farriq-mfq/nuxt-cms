@@ -57,6 +57,12 @@ export default defineEventHandler(async (event) => {
     metaImagePath = uploaded.path;
   }
 
+  const { user } = await getUserSession(event);
+
+  if (!user) {
+    return errorResponse(401, "Sesi tidak valid, silakan login kembali");
+  }
+
   const [result] = await db.insert(pages).values({
     title,
     slug,
@@ -65,6 +71,7 @@ export default defineEventHandler(async (event) => {
     metaDescription: meta_description,
     metaImage: metaImagePath,
     isPublished: is_published,
+    authorId: user.id,
   });
 
   return successResponse({ id: result.insertId }, "Page berhasil dibuat");

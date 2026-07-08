@@ -8,8 +8,21 @@ const pageTitle = computed(() => {
     return (route.meta.title as string) ?? route.name?.toString().split('-').join(' ') ?? 'Dashboard'
 })
 
+const { clear: clearSession } = useUserSession()
+const toast = useToast()
+const isLoggingOut = ref(false)
+
 async function handleLogout() {
-    await $fetch('/api/auth/logout', { method: 'POST' })
+    isLoggingOut.value = true
+
+    try {
+        await $fetch('/api/auth/logout', { method: 'POST' })
+    } catch (err) {
+        console.error('Logout endpoint error:', err)
+    }
+
+    await clearSession()
+    isLoggingOut.value = false
     await navigateTo('/_admins/login')
 }
 </script>

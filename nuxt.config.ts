@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxt/icon",
     "nuxt-toast",
+    "nuxt-auth-utils",
   ],
   css: ["~/assets/css/themes.css"],
   googleFonts: {
@@ -15,6 +16,11 @@ export default defineNuxtConfig({
   toast: {
     settings: {
       position: "topRight",
+    },
+  },
+  typescript: {
+    tsConfig: {
+      include: ["../types/**/*.d.ts"],
     },
   },
 });

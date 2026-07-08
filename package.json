@@ -10,7 +10,8 @@
     "postinstall": "nuxt prepare",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "setup:admin": "tsx scripts/setup.ts"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
@@ -32,12 +33,14 @@
     "@tiptap/starter-kit": "^3.27.1",
     "@tiptap/vue-3": "^3.27.1",
     "@vueuse/core": "^14.3.0",
+    "bcrypt": "^6.0.0",
     "date-fns": "^4.4.0",
     "drizzle-orm": "^0.45.2",
     "izitoast": "^1.4.0",
     "mysql2": "^3.22.5",
     "nanoid": "^5.1.16",
     "nuxt": "^4.4.8",
+    "nuxt-auth-utils": "^0.5.29",
     "nuxt-toast": "1.4.0",
     "sharp": "^0.35.3",
     "slugify": "^1.6.9",
@@ -46,10 +49,13 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@clack/prompts": "^1.7.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@tailwindcss/typography": "^0.5.20",
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^26.1.0",
     "dotenv": "^17.4.2",
-    "drizzle-kit": "^0.31.10"
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.23.0"
   }
 }

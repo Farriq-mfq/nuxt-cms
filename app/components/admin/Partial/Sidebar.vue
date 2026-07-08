@@ -10,6 +10,11 @@ const menuItems: MenuItem[] = [
     { label: 'Dashboard', icon: 'lucide:layout-dashboard', to: '/_admins' },
     { label: 'Menu', icon: 'lucide:menu', to: '/_admins/menus' },
     {
+        label: "Kategori Berita",
+        icon: "lucide:list-tree",
+        to: "/_admins/news-categories"
+    },
+    {
         label: 'Konten',
         icon: 'lucide:file-text',
         children: [
@@ -110,7 +115,7 @@ watchEffect(() => {
                         ]" @click="toggleGroup(item.label)">
                         <Icon :name="item.icon ?? 'lucide:circle'" size="18" class="shrink-0" />
                         <span v-if="isOpen" class="flex-1 text-left surfacespace-nowrap overflow-hidden">{{ item.label
-                            }}</span>
+                        }}</span>
                         <Icon v-if="isOpen" name="lucide:chevron-right" size="16" class="transition-transform shrink-0"
                             :class="isGroupOpen(item) && 'rotate-90'" />
                     </button>

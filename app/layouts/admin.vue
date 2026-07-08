@@ -19,6 +19,5 @@ useHead({
             </main>
         </div>
         <AdminBaseConfirmDialog />
-        <DebugThemeSwitcher />
     </div>
 </template>
