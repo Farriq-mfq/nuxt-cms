@@ -4,9 +4,9 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 const { isOpen, toggle } = useSidebar()
 const route = useRoute()
 
-// const pageTitle = computed(() => {
-//     return (route.meta.title as string) ?? route.name?.toString().split('-').join(' ') ?? 'Dashboard'
-// })
+const pageTitle = computed(() => {
+    return (route.meta.title as string) ?? route.name?.toString().split('-').join(' ') ?? 'Dashboard'
+})
 
 async function handleLogout() {
     await $fetch('/api/auth/logout', { method: 'POST' })
@@ -16,14 +16,14 @@ async function handleLogout() {
 
 <template>
     <header
-        class="fixed top-0 right-0 h-16 bg-white border-b border-outline-variant flex items-center justify-between px-md z-10 transition-all duration-200"
+        class="fixed top-0 right-0 h-16 bg-surface border-b border-outline-variant flex items-center justify-between px-md z-10 transition-all duration-200"
         :class="isOpen ? 'left-64' : 'left-16'">
         <div class="flex items-center gap-3">
             <button type="button" class="md:hidden p-2 rounded hover:bg-surface-container-low transition-colors"
                 @click="toggle">
                 <Icon name="lucide:menu" size="20" />
             </button>
-            <!-- <h1 class="text-headline-md text-on-surface capitalize">{{ pageTitle }}</h1> -->
+            <h1 class="text-headline-md text-inverse-surface capitalize">{{ pageTitle }}</h1>
         </div>
 
         <div class="flex items-center gap-4">
@@ -48,7 +48,7 @@ async function handleLogout() {
                     leave-active-class="transition duration-75 ease-in"
                     leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
                     <MenuItems
-                        class="absolute right-0 mt-2 w-48 bg-white border border-outline-variant rounded shadow-layer-2 py-1 z-30 focus:outline-none">
+                        class="absolute right-0 mt-2 w-48 bg-surface border border-outline-variant rounded shadow-layer-2 py-1 z-30 focus:outline-none">
                         <MenuItem v-slot="{ active }">
                             <NuxtLink to="/_admins/profile"
                                 class="flex items-center gap-2 px-4 py-2 text-body-md text-on-surface"

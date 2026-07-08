@@ -20,6 +20,7 @@ interface ModeConfig {
     successMessage: string
     errorMessage: string
     submitLabel: string
+    cancelLabel: string
     fields: FieldConfig[]
     mutation: (payload: any) => Promise<any>
     transformForm?: (formData: Record<string, any>) => any
@@ -135,7 +136,7 @@ defineExpose({ open, close })
                     <TransitionChild as="template" enter="duration-200 ease-out" enter-from="opacity-0 scale-95"
                         enter-to="opacity-100 scale-100" leave="duration-150 ease-in" leave-from="opacity-100 scale-100"
                         leave-to="opacity-0 scale-95">
-                        <DialogPanel class="w-full max-w-lg bg-white rounded shadow-layer-2 overflow-hidden">
+                        <DialogPanel class="w-full max-w-lg bg-surface rounded shadow-layer-2 overflow-hidden">
                             <div class="flex items-center justify-between px-md py-sm border-b border-outline-variant">
                                 <DialogTitle class="text-headline-md text-on-surface">
                                     {{ currentMode?.title ?? title }}
@@ -161,9 +162,9 @@ defineExpose({ open, close })
                                 <div
                                     class="flex items-center justify-end gap-2 px-md py-sm border-t border-outline-variant bg-surface-container-lowest">
                                     <button type="button" :disabled="isSubmitting"
-                                        class="px-4 py-2 rounded text-body-md border border-outline-variant hover:bg-surface-container-low transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        class="px-4 py-2 rounded text-body-md border border-outline-variant hover:bg-surface-container-low transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-on-surface-variant"
                                         @click="close">
-                                        Batal
+                                        {{ currentMode?.cancelLabel ?? 'Batal' }}
                                     </button>
                                     <button type="submit" :disabled="isSubmitting"
                                         class="flex items-center gap-2 bg-secondary text-on-secondary rounded px-6 py-2 text-body-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors">

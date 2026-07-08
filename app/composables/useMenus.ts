@@ -1,17 +1,10 @@
-type MenuTarget = "_self" | "_blank";
-interface CreateMenuPayload {
-  parent_id: number;
-  title: string;
-  icon: string;
-  url: string;
-  order: number;
-  target: MenuTarget;
-  is_active: boolean;
-}
-
-interface UpdateMenuPayload {
+import {
+  type CreateMenuPayload,
+  type UpdateMenuPayload,
+} from "~~/server/validators/menu";
+interface UpdateMenuPayloadWithId {
   id: number;
-  data: Partial<CreateMenuPayload>;
+  data: UpdateMenuPayload;
 }
 
 export function createMenu(payload: CreateMenuPayload) {
@@ -21,7 +14,7 @@ export function createMenu(payload: CreateMenuPayload) {
   });
 }
 
-export function updateMenu(payload: UpdateMenuPayload) {
+export function updateMenu(payload: UpdateMenuPayloadWithId) {
   return $fetch(`/api/menus/${payload.id}`, {
     method: "PATCH",
     body: payload.data,

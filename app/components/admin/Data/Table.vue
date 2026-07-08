@@ -165,7 +165,7 @@ defineExpose({ refresh })
             </button>
         </div>
 
-        <div class="bg-white border border-outline-variant rounded shadow-layer-1 overflow-hidden">
+        <div class="bg-surface border border-outline-variant rounded shadow-layer-1 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
                     <thead class="bg-surface-container-low border-b border-outline-variant">

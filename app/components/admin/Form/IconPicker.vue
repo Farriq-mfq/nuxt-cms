@@ -55,7 +55,7 @@ onBeforeUnmount(handleClose)
         v-slot="{ open }">
         <div class="relative">
             <ListboxButton ref="buttonRef"
-                class="w-full flex items-center gap-2 bg-surface-container-low border border-outline-variant rounded px-4 py-2 text-body-md text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                class="w-full flex items-center gap-2 bg-surface-container-low border border-outline-variant rounded px-4 py-2 text-body-md text-left disabled:opacity-50 disabled:cursor-not-allowed text-on-surface focus:outline-none"
                 @click="open ? handleClose() : handleOpen()">
                 <Icon v-if="selected" :name="selected.value" size="18" />
                 <span class="flex-1">{{ selected?.label ?? placeholder }}</span>
@@ -75,7 +75,7 @@ onBeforeUnmount(handleClose)
                     leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0"
                     @after-leave="handleClose">
                     <ListboxOptions v-if="open" :style="dropdownStyle"
-                        class="z-[9999] max-h-60 overflow-y-auto bg-white border border-outline-variant rounded shadow-layer-2 py-1 focus:outline-none">
+                        class="z-[9999] max-h-60 overflow-y-auto bg-surface border border-outline-variant rounded shadow-layer-2 py-1 focus:outline-none">
                         <ListboxOption v-for="opt in ICONS" :key="opt.value" v-slot="{ active, selected: isSelected }"
                             :value="opt.value" as="template">
                             <li class="flex items-center gap-2 px-4 py-2 text-body-md cursor-pointer"

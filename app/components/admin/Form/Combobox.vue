@@ -214,7 +214,7 @@ onBeforeUnmount(() => observer?.disconnect())
     <Combobox :model-value="modelValue" :disabled="disabled" @update:model-value="!multi && handleChangeSingle($event)">
         <div class="relative">
             <div
-                class="relative w-full min-h-[42px] bg-surface-container-low border border-outline-variant rounded overflow-hidden focus-within:border-secondary transition-colors">
+                class="relative w-full min-h-[42px] bg-surface-container-low border border-outline-variant rounded overflow-hidden focus-within:border-secondary transition-colors text-on-surface focus:outline-none">
 
                 <div v-if="multi" class="flex flex-wrap items-center gap-1.5 pl-9 pr-9 py-1.5">
                     <span v-for="tag in selectedTags" :key="tag.id"
@@ -226,12 +226,12 @@ onBeforeUnmount(() => observer?.disconnect())
                         </button>
                     </span>
                     <ComboboxInput
-                        class="flex-1 min-w-[80px] bg-transparent text-body-md outline-none disabled:opacity-50"
+                        class="flex-1 min-w-[80px] bg-transparent text-body-md outline-none disabled:opacity-50 placeholder:text-on-surface-variant"
                         :placeholder="selectedTags.length ? '' : placeholder" @change="query = $event.target.value" />
                 </div>
 
                 <ComboboxInput v-else
-                    class="w-full bg-transparent pl-9 pr-16 py-2 text-body-md outline-none disabled:opacity-50"
+                    class="w-full bg-transparent pl-9 pr-16 py-2 text-body-md outline-none disabled:opacity-50 placeholder:text-on-surface-variant"
                     :placeholder="placeholder" :display-value="displayValue" @change="query = $event.target.value" />
 
                 <Icon name="lucide:search" size="18"
@@ -253,7 +253,7 @@ onBeforeUnmount(() => observer?.disconnect())
                 leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                 leave-to-class="transform scale-95 opacity-0" @after-leave="!multi && (query = '')">
                 <ComboboxOptions data-combobox-scroll
-                    class="absolute z-30 mt-1 w-full max-h-60 overflow-y-auto bg-white border border-outline-variant rounded shadow-layer-2 py-1 focus:outline-none">
+                    class="absolute z-30 mt-1 w-full max-h-60 overflow-y-auto bg-surface-container border border-outline-variant rounded shadow-layer-2 py-1 focus:outline-none">
 
                     <div v-if="pending && page === 1"
                         class="flex items-center justify-center gap-2 px-4 py-3 text-body-md text-on-surface-variant">

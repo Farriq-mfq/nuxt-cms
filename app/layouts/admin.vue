@@ -14,10 +14,11 @@ useHead({
         <div class="flex flex-col min-h-screen transition-all duration-200" :class="isOpen ? 'pl-64' : 'pl-16'">
             <AdminPartialTopbar />
 
-            <main class="flex-1 p-md pt-20">
+            <main class="flex-1 p-md pt-20 bg-surface-container-low text-on-surface">
                 <slot />
             </main>
         </div>
         <AdminBaseConfirmDialog />
+        <DebugThemeSwitcher />
     </div>
 </template>

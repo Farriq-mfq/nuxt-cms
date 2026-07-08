@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "nuxt-toast",
   ],
+  css: ["~/assets/css/themes.css"],
   googleFonts: {
     families: {
       Inter: [400, 600, 700, 800],

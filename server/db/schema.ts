@@ -10,7 +10,7 @@ import {
   galleriesRelations,
 } from "./schema/album-gallery";
 
-import { pages } from "./schema/pages";
+import { pages, pagesRelations } from "./schema/pages";
 import { news, newsCategories, newsRelations } from "./schema/news";
 import { announcements, announcementsRelations } from "./schema/announcements";
 
@@ -26,6 +26,7 @@ export {
   galleries,
   galleriesRelations,
   pages,
+  pagesRelations,
   news,
   newsCategories,
   newsRelations,

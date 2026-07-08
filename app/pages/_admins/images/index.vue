@@ -32,7 +32,7 @@ async function handleUpload() {
 </script>
 
 <template>
-    <!-- <div class="p-md bg-white border border-outline-variant rounded shadow-layer-1">
+    <!-- <div class="p-md bg-surface border border-outline-variant rounded shadow-layer-1">
         <label class="text-label-md uppercase tracking-wide text-on-surface-variant">
             Upload Gambar
         </label>

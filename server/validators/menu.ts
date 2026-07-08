@@ -34,5 +34,5 @@ export const paramMenuIdSchema = z.object({
   id: z.coerce.number({ error: "ID harus berupa angka" }).int().positive(),
 });
 
-export type CreateMenuInput = z.infer<typeof createMenuSchema>;
-export type UpdateMenuInput = z.infer<typeof updateMenuSchema>;
+export type CreateMenuPayload = z.infer<typeof createMenuSchema>;
+export type UpdateMenuPayload = z.infer<typeof updateMenuSchema>;

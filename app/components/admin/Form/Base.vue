@@ -16,6 +16,7 @@ interface FieldConfig {
 const props = defineProps<{
     fields: FieldConfig[]
     submitLabel?: string
+    cancelLabel?: string
     mutation: (payload: any) => Promise<any>
     transformForm?: (formData: Record<string, any>) => any
     initialData?: Record<string, any>
@@ -118,7 +119,7 @@ defineExpose({ resetForm: initForm })
             <button v-if="showCancel" type="button" :disabled="isSubmitting"
                 class="px-4 py-2 rounded text-body-md border border-outline-variant hover:bg-surface-container-low transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 @click="emit('cancel')">
-                Batal
+                {{ cancelLabel ?? 'Batal' }}
             </button>
             <button type="submit" :disabled="isSubmitting"
                 class="flex items-center gap-2 bg-secondary text-on-secondary rounded px-6 py-2 text-body-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors">

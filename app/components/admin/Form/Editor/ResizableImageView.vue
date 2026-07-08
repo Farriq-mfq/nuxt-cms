@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
                 class="rounded max-w-full block select-none" draggable="false" />
 
             <div v-if="selected"
-                class="absolute -top-10 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-white border border-outline-variant rounded shadow-layer-2 px-1 py-1 z-10">
+                class="absolute -top-10 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-surface border border-outline-variant rounded shadow-layer-2 px-1 py-1 z-10">
                 <button type="button" class="p-1 rounded hover:bg-surface-container-low transition-colors"
                     :class="node.attrs.align === 'left' && 'bg-secondary-container/40'" @click="setAlign('left')">
                     <Icon name="lucide:align-left" size="14" />

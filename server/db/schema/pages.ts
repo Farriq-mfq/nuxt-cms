@@ -8,6 +8,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 import { _admins } from "./auth";
+import { relations } from "drizzle-orm";
 
 export const pages = mysqlTable("pages", {
   id: serial("id").primaryKey(),
@@ -25,3 +26,10 @@ export const pages = mysqlTable("pages", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
+
+export const pagesRelations = relations(pages, ({ one }) => ({
+  author: one(_admins, {
+    fields: [pages.authorId],
+    references: [_admins.id],
+  }),
+}));
