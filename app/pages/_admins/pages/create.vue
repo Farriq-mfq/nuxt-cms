@@ -2,12 +2,15 @@
 definePageMeta({
     layout: 'admin'
 })
+
+useHead({ title: 'Tambah Halaman' })
+
 const router = useRouter()
 const formRef = ref()
 
 function handleSuccess(result: any) {
-    // router.push('/_admins/menus')
     formRef.value?.resetForm()
+    router.push('/_admins/pages')
 }
 
 const fields = [

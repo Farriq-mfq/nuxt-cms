@@ -39,7 +39,7 @@ const toast = useToast()
 
 function defaultValueFor(field: FieldConfig) {
     if (field.type === 'combobox') return field.multi ? [] : null
-    if (field.type === 'checkbox') return false
+    if (field.type === 'checkbox' || field.type === 'switch') return false
     return ''
 }
 

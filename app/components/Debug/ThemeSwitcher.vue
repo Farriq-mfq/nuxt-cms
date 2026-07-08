@@ -93,7 +93,7 @@ const hideInfo = ref(true)
 
 <template>
     <div
-        class="fixed bottom-4 right-4 z-[99999] w-96 max-h-[80vh] overflow-y-auto bg-white border-2 border-secondary rounded-lg shadow-layer-2 font-mono text-xs">
+        class="fixed bottom-0 right-0 z-[99999] w-96 max-h-[80vh] overflow-y-auto bg-white border-2 border-secondary shadow-layer-2 font-mono text-xs">
         <div class="sticky top-0 bg-secondary text-on-secondary px-3 py-2 flex items-center justify-between">
             <span class="font-bold">🐛 Theme Debugger</span>
             <div class="flex items-center gap-2">
