@@ -1,11 +1,12 @@
-import { and, asc, desc, isNull, like, or } from "drizzle-orm";
+import { or, like, asc, desc } from "drizzle-orm";
 import { db } from "~~/server/db";
-import { pages } from "~~/server/db/schema";
+import { news } from "~~/server/db/schema/news";
 import { paginationQuerySchema } from "~~/server/validators/pagination";
 
 const SORTABLE_COLUMNS = {
-  name: pages.title,
-  createdAt: pages.createdAt,
+  createdAt: news.createdAt,
+  publishedAt: news.publishedAt,
+  title: news.title,
 } as const;
 
 export default defineEventHandler(async (event) => {
@@ -15,28 +16,30 @@ export default defineEventHandler(async (event) => {
   const { page, limit, search, sortBy, sortOrder } = parsed.data;
 
   const sortColumn =
-    SORTABLE_COLUMNS[sortBy as keyof typeof SORTABLE_COLUMNS] ??
-    pages.createdAt;
-
+    SORTABLE_COLUMNS[sortBy as keyof typeof SORTABLE_COLUMNS] ?? news.createdAt;
   const orderFn = sortOrder === "asc" ? asc : desc;
 
-  const where = search ? and(or(like(pages.title, `%${search}%`))) : undefined;
+  const where = search
+    ? or(like(news.title, `%${search}%`), like(news.excerpt, `%${search}%`))
+    : undefined;
 
   const { items, total } = await getPaginatedResult({
-    queryable: db.query.pages,
-    with: {
-      author: { columns: { password: false } },
-    },
-    table: pages,
+    queryable: db.query.news,
+    table: news,
     where,
     orderBy: orderFn(sortColumn),
+    with: {
+      category: true,
+      thumbnail: true,
+      author: { columns: { password: false } },
+    },
     page,
     limit,
   });
 
   return successResponse(
     items,
-    "Daftar halaman",
+    "Daftar berita berhasil diambil",
     buildPaginationMeta(page, limit, total),
   );
 });

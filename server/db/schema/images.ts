@@ -7,6 +7,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 import { _admins } from "./auth";
+import { relations } from "drizzle-orm";
 
 export const images = mysqlTable("images", {
   id: serial("id").primaryKey(),
@@ -23,3 +24,10 @@ export const images = mysqlTable("images", {
   }).references(() => _admins.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export const imagesRelations = relations(images, ({ one }) => ({
+  uploader: one(_admins, {
+    fields: [images.uploadedBy],
+    references: [_admins.id],
+  }),
+}));

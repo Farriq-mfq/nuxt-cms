@@ -6,6 +6,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
+import { relations } from "drizzle-orm";
 import { _admins } from "./auth";
 
 export const files = mysqlTable("files", {
@@ -23,3 +24,10 @@ export const files = mysqlTable("files", {
   }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export const filesRelations = relations(files, ({ one }) => ({
+  uploader: one(_admins, {
+    fields: [files.uploadedBy],
+    references: [_admins.id],
+  }),
+}));

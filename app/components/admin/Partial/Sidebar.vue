@@ -20,7 +20,6 @@ const menuItems: MenuItem[] = [
         children: [
             { label: 'Halaman', icon: 'lucide:file-text', to: '/_admins/pages' },
             { label: 'Berita', icon: 'lucide:newspaper', to: '/_admins/news' },
-            { label: 'Pengumuman', icon: 'lucide:megaphone', to: '/_admins/announcements' },
         ],
     },
     {

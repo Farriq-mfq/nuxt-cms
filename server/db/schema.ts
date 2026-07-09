@@ -1,8 +1,8 @@
 import { _admins } from "./schema/auth";
 import { setting } from "./schema/setting";
 import { menus, menusRelations } from "./schema/menu";
-import { files } from "./schema/files";
-import { images } from "./schema/images";
+import { files, filesRelations } from "./schema/files";
+import { images, imagesRelations } from "./schema/images";
 import {
   albums,
   albumsRelations,
@@ -12,7 +12,6 @@ import {
 
 import { pages, pagesRelations } from "./schema/pages";
 import { news, newsCategories, newsRelations } from "./schema/news";
-import { announcements, announcementsRelations } from "./schema/announcements";
 
 export {
   _admins,
@@ -30,6 +29,6 @@ export {
   news,
   newsCategories,
   newsRelations,
-  announcements,
-  announcementsRelations,
+  imagesRelations,
+  filesRelations,
 };

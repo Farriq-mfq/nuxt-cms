@@ -63,27 +63,33 @@ const {
 </script>
 
 <template>
-    <AdminDataTable ref="tableRef" endpoint="/api/_admins/news-categories" :columns="columns"
-        :search-placeholder="'Cari Kategori Berita...'" row-key="id">
-        <template #toolbar>
-            <button @click="formDialogRef.open('create')" type="button"
-                class="flex items-center gap-2 bg-secondary text-on-secondary rounded px-6 py-3">
-                <Icon name="lucide:plus" size="18" />
-                Tambah Kategori
-            </button>
-        </template>
-        <template #cell-action="{ row, refresh }">
-            <div class="flex items-center justify-end gap-2">
-                <button class="text-secondary hover:underline text-label-md" @click="formDialogRef?.open('edit', row)">
-                    <Icon name="lucide:edit" size="18" />
+    <div class="space-y-md">
+        <div class="flex items-center justify-between">
+            <h1 class="text-headline-lg">Kategori Berita</h1>
+        </div>
+        <AdminDataTable ref="tableRef" endpoint="/api/_admins/news-categories" :columns="columns"
+            :search-placeholder="'Cari Kategori Berita...'" row-key="id">
+            <template #toolbar>
+                <button @click="formDialogRef.open('create')" type="button"
+                    class="flex items-center gap-2 bg-secondary text-on-secondary rounded px-6 py-3">
+                    <Icon name="lucide:plus" size="18" />
+                    Tambah Kategori
                 </button>
-                <button :disabled="isPending" class="text-error hover:underline text-label-md"
-                    @click="executeDelete(row.id, refresh)">
-                    <Icon name="lucide:trash-2" size="18" />
-                </button>
-            </div>
-        </template>
+            </template>
+            <template #cell-action="{ row, refresh }">
+                <div class="flex items-center justify-end gap-2">
+                    <button class="text-secondary hover:underline text-label-md"
+                        @click="formDialogRef?.open('edit', row)">
+                        <Icon name="lucide:edit" size="18" />
+                    </button>
+                    <button :disabled="isPending" class="text-error hover:underline text-label-md"
+                        @click="executeDelete(row.id, refresh)">
+                        <Icon name="lucide:trash-2" size="18" />
+                    </button>
+                </div>
+            </template>
 
-    </AdminDataTable>
-    <AdminFormDialog ref="formDialogRef" title="Form Kategori" :modes="modes" @refresh="tableRef?.refresh()" />
+        </AdminDataTable>
+        <AdminFormDialog ref="formDialogRef" title="Form Kategori" :modes="modes" @refresh="tableRef?.refresh()" />
+    </div>
 </template>
