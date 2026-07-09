@@ -55,7 +55,9 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],
+        display: ["Plus Jakarta Sans", "sans-serif"],
       },
+
       fontSize: {
         "display-lg": [
           "64px",

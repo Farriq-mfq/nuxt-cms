@@ -1,5 +1,8 @@
 <script setup></script>
 
 <template>
-    <p>Ini Halaman Pubolic</p>
+    <p>
+        Halaman Public
+
+    </p>
 </template>

@@ -13,6 +13,7 @@ import {
 import { pages, pagesRelations } from "./schema/pages";
 import { news, newsCategories, newsRelations } from "./schema/news";
 import { relatedLinks } from "./schema/related-links";
+import { banners, bannersRelations } from "./schema/banners";
 
 export {
   _admins,
@@ -33,4 +34,6 @@ export {
   imagesRelations,
   filesRelations,
   relatedLinks,
+  banners,
+  bannersRelations,
 };
