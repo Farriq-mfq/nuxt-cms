@@ -1,15 +1,47 @@
-import { type ThemeName } from "~~/server/utils/theme";
+import {
+  getBaseThemeName,
+  isDarkTheme,
+  buildThemeName,
+  BASE_THEMES,
+  type ThemeName,
+} from "~~/server/utils/theme";
+
 export function useTheme() {
-  const theme = useState<ThemeName>("app-theme", () => "default");
+  const isDarkCookie = useCookie<boolean>("app-theme-dark", {
+    default: () => false,
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
+
+  const baseTheme = useState<string>("app-theme-base", () => "default");
+
+  const theme = computed<ThemeName>(() =>
+    buildThemeName(baseTheme.value, isDarkCookie.value),
+  );
 
   function setTheme(name: ThemeName) {
-    theme.value = name;
+    baseTheme.value = getBaseThemeName(name);
+    isDarkCookie.value = isDarkTheme(name);
+
     if (import.meta.client) {
       document.documentElement.setAttribute("data-theme", name);
-      localStorage.setItem("app-theme", name);
-      // TODO: nanti tambah persist ke database di sini
+      localStorage.setItem("app-theme-base", baseTheme.value);
     }
   }
 
-  return { theme, setTheme };
+  function toggleDarkMode() {
+    setTheme(buildThemeName(baseTheme.value, !isDarkCookie.value));
+  }
+
+  function selectBaseTheme(base: string) {
+    setTheme(buildThemeName(base, isDarkCookie.value));
+  }
+
+  return {
+    theme,
+    setTheme,
+    toggleDarkMode,
+    selectBaseTheme,
+    baseThemes: BASE_THEMES,
+  };
 }

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 const { setting } = useSetting()
+const { theme } = useTheme()
 
 useHead({
   htmlAttrs: {
     lang: 'id',
+    'data-theme': theme.value,
   },
   titleTemplate: (titleChunk) => {
     const appName = setting.value?.appName ?? ''

@@ -49,11 +49,10 @@ export default defineNuxtPlugin(async () => {
     setting.value = data.value.data;
   }
 
-  if (setting.value?.appTheme) {
-    useHead({
-      htmlAttrs: {
-        "data-theme": setting.value.appTheme,
-      },
-    });
+  const themeCookie = useCookie("app-theme");
+
+  if (!themeCookie.value && setting.value?.appTheme) {
+    const { setTheme } = useTheme();
+    setTheme(setting.value.appTheme as any);
   }
 });

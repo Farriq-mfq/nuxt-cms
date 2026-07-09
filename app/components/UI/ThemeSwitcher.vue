@@ -22,7 +22,7 @@ function toggleDarkMode() {
 
 <template>
     <button type="button"
-        class="flex items-center gap-1.5 px-2 py-1 rounded text-label-md border border-outline-variant hover:bg-surface-container-low transition-colors"
+        class="flex items-center gap-1.5 px-2 py-1 rounded text-label-md border border-outline-variant hover:bg-surface-container-low transition-colors text-on-surface-variant"
         @click="toggleDarkMode">
         <Icon :name="currentIsDark ? 'lucide:moon' : 'lucide:sun'" size="14" />
     </button>

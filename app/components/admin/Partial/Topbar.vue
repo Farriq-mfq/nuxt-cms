@@ -35,7 +35,9 @@ async function handleLogout() {
             </button>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+            <UIThemeSwitcher />
+
             <Menu as="div" class="relative">
                 <MenuButton
                     class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-surface-container-low transition-colors">
