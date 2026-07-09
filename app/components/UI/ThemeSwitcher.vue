@@ -2,27 +2,14 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { BASE_THEMES, getBaseThemeName, isDarkTheme, buildThemeName } from '~~/server/utils/theme'
 
-const { theme, setTheme } = useTheme()
+const { isDark, toggleDarkMode } = useTheme()
 
-const currentBase = computed(() => getBaseThemeName(theme.value))
-const currentIsDark = computed(() => isDarkTheme(theme.value))
-
-const currentThemeOption = computed(() =>
-    BASE_THEMES.find((t) => t.name === currentBase.value) ?? BASE_THEMES[0]
-)
-
-function selectBaseTheme(name: string) {
-    setTheme(buildThemeName(name, currentIsDark.value))
-}
-
-function toggleDarkMode() {
-    setTheme(buildThemeName(currentBase.value, !currentIsDark.value))
-}
+const currentIsDark = computed(() => isDark.value)
 </script>
 
 <template>
     <button type="button"
-        class="flex items-center gap-1.5 px-2 py-1 rounded text-label-md border border-outline-variant hover:bg-surface-container-low transition-colors text-on-surface-variant"
+        class="flex items-center gap-1.5 justify-center h-7 w-7 rounded text-label-md border border-outline-variant hover:bg-surface-container-low transition-colors text-on-surface-variant"
         @click="toggleDarkMode">
         <Icon :name="currentIsDark ? 'lucide:moon' : 'lucide:sun'" size="14" />
     </button>

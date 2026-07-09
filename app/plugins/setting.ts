@@ -48,11 +48,4 @@ export default defineNuxtPlugin(async () => {
   if (data.value?.data) {
     setting.value = data.value.data;
   }
-
-  const themeCookie = useCookie("app-theme");
-
-  if (!themeCookie.value && setting.value?.appTheme) {
-    const { setTheme } = useTheme();
-    setTheme(setting.value.appTheme as any);
-  }
 });

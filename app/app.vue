@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const { setting } = useSetting()
-const { theme } = useTheme()
+const { currentDarkMode } = useTheme()
 
 useHead({
   htmlAttrs: {
     lang: 'id',
-    'data-theme': theme.value,
+    'data-theme': currentDarkMode(setting.value?.appTheme),
   },
   titleTemplate: (titleChunk) => {
     const appName = setting.value?.appName ?? ''

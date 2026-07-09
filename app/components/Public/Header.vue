@@ -83,21 +83,21 @@ function handleSearchKeydown(event: KeyboardEvent) {
 
                 <nav class="hidden lg:flex items-center gap-1 lg:justify-self-center">
                     <NuxtLink to="/"
-                        class="px-4 py-2 rounded text-body-md text-white/70 hover:text-white transition-colors relative whitespace-nowrap
-                       after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
+                        class="px-4 py-2 rounded text-body-md text-on-primary/70 hover:text-on-primary transition-colors relative whitespace-nowrap
+                       after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-on-primary after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
                         Beranda
                     </NuxtLink>
 
                     <template v-for="item in menu" :key="item.id">
                         <NuxtLink v-if="!item.children.length" :to="menuHref(item)" :target="item.target"
-                            class="px-4 py-2 rounded text-body-md text-white/70 hover:text-white transition-colors relative whitespace-nowrap
-                           after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
+                            class="px-4 py-2 rounded text-body-md text-on-primary/70 hover:text-on-primary transition-colors relative whitespace-nowrap
+                           after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-on-primary after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
                             {{ item.title }}
                         </NuxtLink>
 
                         <Popover v-else class="relative">
                             <PopoverButton
-                                class="flex items-center gap-1 px-4 py-2 rounded text-body-md text-white/70 hover:text-white transition-colors whitespace-nowrap">
+                                class="flex items-center gap-1 px-4 py-2 rounded text-body-md text-on-primary/70 hover:text-on-primary transition-colors whitespace-nowrap">
                                 {{ item.title }}
                                 <Icon name="lucide:chevron-down" size="14" />
                             </PopoverButton>
@@ -107,7 +107,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
                                 leave-active-class="transition duration-100 ease-in"
                                 leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-1">
                                 <PopoverPanel
-                                    class="absolute left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-outline-variant rounded shadow-layer-2 py-1 z-20">
+                                    class="absolute left-1/2 -translate-x-1/2 mt-1 w-56 bg-surface border border-outline-variant rounded shadow-layer-2 py-1 z-20">
                                     <NuxtLink v-for="child in item.children" :key="child.id" :to="menuHref(child)"
                                         :target="child.target"
                                         class="block px-4 py-2 text-body-md text-on-surface hover:bg-surface-container-low transition-colors">
@@ -121,16 +121,17 @@ function handleSearchKeydown(event: KeyboardEvent) {
 
                 <div class="flex items-center gap-2 lg:gap-1 shrink-0 lg:justify-self-end">
                     <button
-                        class="hidden lg:flex p-2 rounded text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                        class="hidden lg:flex p-2 rounded text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-colors"
                         title="Cari Berita" @click="openSearch">
                         <Icon name="lucide:search" size="18" />
                     </button>
 
-                    <button class="lg:hidden p-2 text-white" @click="openSearch">
+                    <button class="lg:hidden p-2 text-on-primary" @click="openSearch">
                         <Icon name="lucide:search" size="20" />
                     </button>
 
-                    <button class="lg:hidden text-white relative z-50" @click="isMobileMenuOpen = !isMobileMenuOpen">
+                    <button class="lg:hidden text-on-primary relative z-50"
+                        @click="isMobileMenuOpen = !isMobileMenuOpen">
                         <Icon :name="isMobileMenuOpen ? 'lucide:x' : 'lucide:menu'" size="24" />
                     </button>
                 </div>
@@ -147,24 +148,24 @@ function handleSearchKeydown(event: KeyboardEvent) {
                     leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 -translate-y-2">
                     <nav
-                        class="bg-primary border-t border-white/10 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-layer-2">
+                        class="bg-primary border-t border-on-primary/10 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-layer-2">
                         <div class="px-margin py-md space-y-1">
                             <NuxtLink to="/"
-                                class="block px-3 py-2.5 rounded text-body-md text-white hover:bg-white/10 transition-colors"
+                                class="block px-3 py-2.5 rounded text-body-md text-on-primary hover:bg-on-primary/10 transition-colors"
                                 @click="isMobileMenuOpen = false">
                                 Beranda
                             </NuxtLink>
 
                             <template v-for="item in menu" :key="item.id">
                                 <NuxtLink v-if="!item.children.length" :to="menuHref(item)" :target="item.target"
-                                    class="block px-3 py-2.5 rounded text-body-md text-white hover:bg-white/10 transition-colors"
+                                    class="block px-3 py-2.5 rounded text-body-md text-on-primary hover:bg-on-primary/10 transition-colors"
                                     @click="isMobileMenuOpen = false">
                                     {{ item.title }}
                                 </NuxtLink>
 
                                 <div v-else>
                                     <button
-                                        class="w-full flex items-center justify-between px-3 py-2.5 rounded text-body-md text-white hover:bg-white/10 transition-colors"
+                                        class="w-full flex items-center justify-between px-3 py-2.5 rounded text-body-md text-on-primary hover:bg-on-primary/10 transition-colors"
                                         @click="toggleMobileGroup(item.id)">
                                         <span>{{ item.title }}</span>
                                         <Icon name="lucide:chevron-down" size="16" class="transition-transform"
@@ -172,10 +173,10 @@ function handleSearchKeydown(event: KeyboardEvent) {
                                     </button>
 
                                     <div v-show="openMobileGroups.has(item.id)"
-                                        class="pl-3 border-l border-white/20 ml-3 mt-1 space-y-1">
+                                        class="pl-3 border-l border-on-primary/20 ml-3 mt-1 space-y-1">
                                         <NuxtLink v-for="child in item.children" :key="child.id" :to="menuHref(child)"
                                             :target="child.target"
-                                            class="block px-3 py-2 rounded text-body-md text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+                                            class="block px-3 py-2 rounded text-body-md text-on-primary/90 hover:bg-on-primary/10 hover:text-on-primary transition-colors"
                                             @click="isMobileMenuOpen = false">
                                             {{ child.title }}
                                         </NuxtLink>
@@ -194,7 +195,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
             <div v-if="isSearchOpen"
                 class="fixed inset-0 z-50 bg-black/50 flex items-start justify-center pt-24 px-margin"
                 @click.self="closeSearch">
-                <div class="w-full max-w-xl bg-white rounded shadow-layer-2 p-4">
+                <div class="w-full max-w-xl bg-surface rounded shadow-layer-2 p-4">
                     <div class="flex items-center gap-3">
                         <Icon name="lucide:search" size="20" class="text-on-surface-variant shrink-0" />
                         <input ref="searchInputRef" v-model="searchQuery" type="text" placeholder="Cari berita..."

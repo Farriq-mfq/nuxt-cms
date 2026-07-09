@@ -6,7 +6,6 @@ const { data: relatedLinksData } = await useAsyncData(
     () => $fetch('/api/public/related-links', { query: { limit: 20 } })
 )
 
-
 const relatedLinks = computed(() => relatedLinksData.value?.data ?? [])
 
 const socialPlatforms = [
@@ -34,38 +33,39 @@ const activeSocials = computed(() => {
                             class="h-10 w-auto object-contain" />
                         <span class="text-headline-md">{{ setting?.appName }}</span>
                     </div>
-                    <p class="text-body-md text-white/70 max-w-md">{{ setting?.appDescription }}</p>
+                    <p class="text-body-md text-on-primary/70 max-w-md">{{ setting?.appDescription }}</p>
 
                     <div v-if="activeSocials.length" class="flex items-center gap-2 mt-md">
                         <a v-for="social in activeSocials" :key="social.key" :href="setting?.socialLinks?.[social.key]"
                             target="_blank" rel="noopener noreferrer"
-                            class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+                            class="w-9 h-9 flex items-center justify-center rounded-full bg-on-primary/10 hover:bg-on-primary/20 transition-colors">
                             <Icon :name="social.icon" size="16" />
                         </a>
                     </div>
                 </div>
 
                 <div>
-                    <h3 class="text-label-md uppercase tracking-wide text-white/50 mb-sm">Kontak</h3>
-                    <ul class="space-y-2 text-body-md text-white/80">
+                    <h3 class="text-label-md uppercase tracking-wide text-on-primary/50 mb-sm">Kontak</h3>
+                    <ul class="space-y-2 text-body-md text-on-primary/80">
                         <li v-if="setting?.address" class="flex items-start gap-2">
                             <Icon name="lucide:map-pin" size="16" class="shrink-0 mt-0.5" />
                             <span>{{ setting.address }}</span>
                         </li>
                         <li v-if="setting?.contactEmail" class="flex items-center gap-2">
                             <Icon name="lucide:mail" size="16" class="shrink-0" />
-                            <a :href="`mailto:${setting.contactEmail}`" class="hover:text-white transition-colors">{{
-                                setting.contactEmail }}</a>
+                            <a :href="`mailto:${setting.contactEmail}`"
+                                class="hover:text-on-primary transition-colors">{{
+                                    setting.contactEmail }}</a>
                         </li>
                         <li v-if="setting?.contactPhone" class="flex items-center gap-2">
                             <Icon name="lucide:phone" size="16" class="shrink-0" />
-                            <a :href="`tel:${setting.contactPhone}`" class="hover:text-white transition-colors">{{
+                            <a :href="`tel:${setting.contactPhone}`" class="hover:text-on-primary transition-colors">{{
                                 setting.contactPhone }}</a>
                         </li>
                         <li v-if="setting?.contactWhatsapp" class="flex items-center gap-2">
                             <Icon name="lucide:message-circle" size="16" class="shrink-0" />
                             <a :href="`https://wa.me/${setting.contactWhatsapp.replace(/\D/g, '')}`" target="_blank"
-                                class="hover:text-white transition-colors">
+                                class="hover:text-on-primary transition-colors">
                                 {{ setting.contactWhatsapp }}
                             </a>
                         </li>
@@ -73,11 +73,11 @@ const activeSocials = computed(() => {
                 </div>
 
                 <div v-if="relatedLinks.length">
-                    <h3 class="text-label-md uppercase tracking-wide text-white/50 mb-sm">Tautan Terkait</h3>
-                    <ul class="space-y-2 text-body-md text-white/80">
+                    <h3 class="text-label-md uppercase tracking-wide text-on-primary/50 mb-sm">Tautan Terkait</h3>
+                    <ul class="space-y-2 text-body-md text-on-primary/80">
                         <li v-for="link in relatedLinks" :key="link.id">
                             <a :href="link.url" target="_blank" rel="noopener noreferrer"
-                                class="flex items-center gap-2 hover:text-white transition-colors">
+                                class="flex items-center gap-2 hover:text-on-primary transition-colors">
                                 <Icon v-if="link.icon" :name="link.icon" size="14" />
                                 {{ link.title }}
                             </a>
@@ -86,8 +86,8 @@ const activeSocials = computed(() => {
                 </div>
             </div>
 
-            <div class="border-t border-white/10 mt-lg pt-md text-center">
-                <p class="text-label-md text-white/50">
+            <div class="border-t border-on-primary/10 mt-lg pt-md text-center">
+                <p class="text-label-md text-on-primary/50">
                     {{ setting?.footerText || `© ${new Date().getFullYear()} ${setting?.appName}. All rights reserved.`
                     }}
                 </p>

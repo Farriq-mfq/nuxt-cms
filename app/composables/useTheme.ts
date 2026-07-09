@@ -1,9 +1,8 @@
 import {
-  getBaseThemeName,
   isDarkTheme,
-  buildThemeName,
-  BASE_THEMES,
+  getBaseThemeName,
   type ThemeName,
+  buildThemeName,
 } from "~~/server/utils/theme";
 
 export function useTheme() {
@@ -13,35 +12,33 @@ export function useTheme() {
     sameSite: "lax",
   });
 
-  const baseTheme = useState<string>("app-theme-base", () => "default");
+  const isDark = computed(() => isDarkCookie.value);
 
-  const theme = computed<ThemeName>(() =>
-    buildThemeName(baseTheme.value, isDarkCookie.value),
-  );
-
-  function setTheme(name: ThemeName) {
-    baseTheme.value = getBaseThemeName(name);
+  function setThemeDark(name: ThemeName) {
     isDarkCookie.value = isDarkTheme(name);
-
-    if (import.meta.client) {
-      document.documentElement.setAttribute("data-theme", name);
-      localStorage.setItem("app-theme-base", baseTheme.value);
-    }
   }
 
   function toggleDarkMode() {
-    setTheme(buildThemeName(baseTheme.value, !isDarkCookie.value));
+    isDarkCookie.value = !isDarkCookie.value;
+
+    const currentThemeRaw = document.documentElement.getAttribute(
+      "data-theme",
+    ) as ThemeName;
+    const baseTheme = getBaseThemeName(currentThemeRaw); // strip -dark dulu, ambil base murni
+
+    const newTheme = buildThemeName(baseTheme, isDarkCookie.value);
+    document.documentElement.setAttribute("data-theme", newTheme);
   }
 
-  function selectBaseTheme(base: string) {
-    setTheme(buildThemeName(base, isDarkCookie.value));
+  function currentDarkMode(appTheme: ThemeName) {
+    const baseTheme = getBaseThemeName(appTheme);
+    return buildThemeName(baseTheme, isDarkCookie.value);
   }
 
   return {
-    theme,
-    setTheme,
+    isDark,
     toggleDarkMode,
-    selectBaseTheme,
-    baseThemes: BASE_THEMES,
+    setThemeDark,
+    currentDarkMode,
   };
 }
