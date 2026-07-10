@@ -36,6 +36,8 @@ const modes = {
         submitLabel: 'Simpan',
         fields: [
             { name: 'title', label: 'Judul', type: 'text', required: true, placeholder: 'Judul banner (internal, tidak tampil publik)' },
+            { name: 'description', label: 'Deskripsi', type: 'textarea', required: false, placeholder: 'Deskripsi singkat (opsional)' },
+
             { name: 'image', label: 'Gambar Banner', type: 'file', accept: 'image/png,image/jpeg,image/webp', required: true },
             { name: 'linkUrl', label: 'Link Tujuan', type: 'text', required: false, placeholder: 'https://... (opsional)' },
             { name: 'order', label: 'Urutan', type: 'number', required: false },
@@ -50,6 +52,7 @@ const modes = {
         submitLabel: 'Update',
         fields: [
             { name: 'title', label: 'Judul', type: 'text', required: true },
+            { name: 'description', label: 'Deskripsi', type: 'textarea', required: false },
             { name: 'image', label: 'Gambar Banner', type: 'file', accept: 'image/png,image/jpeg,image/webp', required: false },
             { name: 'linkUrl', label: 'Link Tujuan', type: 'text', required: false },
             { name: 'order', label: 'Urutan', type: 'number', required: false },
@@ -59,6 +62,7 @@ const modes = {
         transformForm: (formData: any) => ({
             id: formData.id,
             title: formData.title,
+            description: formData.description,
             image: formData.image,
             linkUrl: formData.linkUrl,
             order: formData.order,
@@ -67,6 +71,7 @@ const modes = {
         transformData: (row: any) => ({
             id: row.id,
             title: row.title,
+            description: row.description ?? '',
             image: row.image?.path,
             linkUrl: row.linkUrl ?? '',
             order: row.order,

@@ -24,8 +24,8 @@ const activeSocials = computed(() => {
 </script>
 
 <template>
-    <footer class="bg-primary text-on-primary mt-xl">
-        <div class="max-w-7xl mx-auto px-margin py-xl">
+    <footer class="bg-primary text-on-primary">
+        <div class="max-w-7xl mx-auto px-sm xs:px-0 py-xl">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-lg">
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-2 mb-sm">
@@ -87,9 +87,11 @@ const activeSocials = computed(() => {
             </div>
 
             <div class="border-t border-on-primary/10 mt-lg pt-md text-center">
+                <p class="text-label-md text-on-primary/50 mb-2">
+                    {{ setting?.footerText }}
+                </p>
                 <p class="text-label-md text-on-primary/50">
-                    {{ setting?.footerText || `© ${new Date().getFullYear()} ${setting?.appName}. All rights reserved.`
-                    }}
+                    {{ `© ${new Date().getFullYear()} ${setting?.appName}. All rights reserved.` }}
                 </p>
             </div>
         </div>

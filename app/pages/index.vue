@@ -1,8 +1,11 @@
 <script setup></script>
 
 <template>
-    <p>
+    <div>
+        <PublicBannerCarousel />
+        <!-- <UIThemeSwitcher /> -->
+    </div>
+    <!-- <p>
         Halaman Public
-        <UIThemeSwitcher />
-    </p>
+    </p> -->
 </template>

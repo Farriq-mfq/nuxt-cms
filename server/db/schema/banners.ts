@@ -4,6 +4,7 @@ import {
   int,
   mysqlTable,
   serial,
+  text,
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
@@ -13,6 +14,7 @@ import { images } from "./images";
 export const banners = mysqlTable("banners", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
   imageId: bigint("image_id", { mode: "number", unsigned: true })
     .notNull()
     .references(() => images.id),

@@ -14,6 +14,7 @@ const optionalDateFromFormData = z.preprocess((val) => {
 
 export const createBannerSchema = z.object({
   title: z.string().trim().min(1, "Judul tidak boleh kosong").max(255),
+  description: z.string().trim().max(2000).optional(),
   linkUrl: z
     .string()
     .trim()

@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
 
   const rawBody = {
     title: fields.title,
+    description: fields.description || undefined,
     linkUrl: fields.linkUrl || undefined,
     order: fields.order,
     isActive: fields.isActive,
@@ -35,7 +36,8 @@ export default defineEventHandler(async (event) => {
     return zodErrorResponse(parsed.error);
   }
 
-  const { title, linkUrl, order, isActive, startDate, endDate } = parsed.data;
+  const { title, description, linkUrl, order, isActive, startDate, endDate } =
+    parsed.data;
 
   const uploaded = await saveUploadedFile(files.image, "images", {
     imageProcessing: {
@@ -58,6 +60,7 @@ export default defineEventHandler(async (event) => {
 
   const [result] = await db.insert(banners).values({
     title,
+    description,
     imageId: insertedImage.insertId,
     linkUrl: linkUrl || undefined,
     order,

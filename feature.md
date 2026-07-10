@@ -20,3 +20,12 @@
    2. (Menu From Database)
    3. Search Berita
    4. Sebalah Kiri AppHeaderLogo jika tidak ada tampilkan nama aplikasi saja 
+
+
+# PLan 
+1. Fix Banner (Add Title,description,linkUrl)
+2. Fix Menu Tidak Recursive
+3. Fix Menu Tampilan Desktop di buat full width dan kolumn serta tampilan mobile tidak perlu di ubah
+4. Make Full Beranda
+5. Make Page /p/{slug}
+6. Make News /berita/{slug}

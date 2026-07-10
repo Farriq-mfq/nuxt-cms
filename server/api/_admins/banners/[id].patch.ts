@@ -43,6 +43,7 @@ export default defineEventHandler(async (event) => {
 
   const rawBody = {
     title: fields.title || undefined,
+    description: fields.description || undefined,
     linkUrl: fields.linkUrl || undefined,
     order: fields.order,
     isActive: fields.isActive,
@@ -56,9 +57,12 @@ export default defineEventHandler(async (event) => {
     return zodErrorResponse(parsed.error);
   }
 
-  const { title, linkUrl, order, isActive, startDate, endDate } = parsed.data;
+  const { title, description, linkUrl, order, isActive, startDate, endDate } =
+    parsed.data;
 
   let imageId: number | undefined;
+  let oldImageToDelete: { id: number; path: string } | null = null;
+
   if (files.image) {
     const uploaded = await saveUploadedFile(files.image, "images", {
       imageProcessing: {
@@ -81,16 +85,15 @@ export default defineEventHandler(async (event) => {
 
     imageId = insertedImage.insertId;
 
-    const oldImage = await db
-      .select()
-      .from(images)
-      .where(eq(images.id, existingBanner.imageId))
-      .limit(1);
-    if (oldImage[0]) {
-      try {
-        await unlink(join(process.cwd(), "public", oldImage[0].path));
-      } catch {}
-      await db.delete(images).where(eq(images.id, existingBanner.imageId));
+    if (existingBanner.imageId) {
+      const oldImage = await db
+        .select()
+        .from(images)
+        .where(eq(images.id, existingBanner.imageId))
+        .limit(1);
+      if (oldImage[0]) {
+        oldImageToDelete = { id: oldImage[0].id, path: oldImage[0].path };
+      }
     }
   }
 
@@ -98,6 +101,7 @@ export default defineEventHandler(async (event) => {
     .update(banners)
     .set({
       ...(title !== undefined && { title }),
+      ...(description !== undefined && { description }),
       ...(linkUrl !== undefined && { linkUrl: linkUrl || null }),
       ...(order !== undefined && { order }),
       ...(isActive !== undefined && { isActive }),
@@ -106,6 +110,13 @@ export default defineEventHandler(async (event) => {
       ...(imageId !== undefined && { imageId }),
     })
     .where(eq(banners.id, id));
+
+  if (oldImageToDelete) {
+    try {
+      await unlink(join(process.cwd(), "public", oldImageToDelete.path));
+    } catch {}
+    await db.delete(images).where(eq(images.id, oldImageToDelete.id));
+  }
 
   return successResponse({ id }, "Banner berhasil diperbarui");
 });

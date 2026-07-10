@@ -35,9 +35,6 @@ onBeforeUnmount(() => {
     window.removeEventListener('scroll', handleScroll)
 })
 
-function menuHref(item: (typeof menu.value)[number]): string {
-    return item.url || `/${item.slug}`
-}
 
 watch(isMobileMenuOpen, (open) => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -69,7 +66,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
 
 <template>
     <header class="sticky top-0 z-40 bg-primary transition-shadow" :class="isScrolled && 'shadow-layer-2'">
-        <div class="max-w-7xl mx-auto px-margin">
+        <div class="max-w-7xl mx-auto px-sm xs:px-0">
             <div class="flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between h-16 gap-4">
                 <NuxtLink to="/" class="flex items-center gap-2 shrink-0 lg:justify-self-start"
                     @click="isMobileMenuOpen = false">
@@ -83,40 +80,11 @@ function handleSearchKeydown(event: KeyboardEvent) {
 
                 <nav class="hidden lg:flex items-center gap-1 lg:justify-self-center">
                     <NuxtLink to="/"
-                        class="px-4 py-2 rounded text-body-md text-on-primary/70 hover:text-on-primary transition-colors relative whitespace-nowrap
-                       after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-on-primary after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
+                        class="px-4 py-2 rounded text-body-md text-white/70 hover:text-white transition-colors relative whitespace-nowrap after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
                         Beranda
                     </NuxtLink>
 
-                    <template v-for="item in menu" :key="item.id">
-                        <NuxtLink v-if="!item.children.length" :to="menuHref(item)" :target="item.target"
-                            class="px-4 py-2 rounded text-body-md text-on-primary/70 hover:text-on-primary transition-colors relative whitespace-nowrap
-                           after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-on-primary after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
-                            {{ item.title }}
-                        </NuxtLink>
-
-                        <Popover v-else class="relative">
-                            <PopoverButton
-                                class="flex items-center gap-1 px-4 py-2 rounded text-body-md text-on-primary/70 hover:text-on-primary transition-colors whitespace-nowrap">
-                                {{ item.title }}
-                                <Icon name="lucide:chevron-down" size="14" />
-                            </PopoverButton>
-
-                            <transition enter-active-class="transition duration-150 ease-out"
-                                enter-from-class="opacity-0 -translate-y-1" enter-to-class="opacity-100 translate-y-0"
-                                leave-active-class="transition duration-100 ease-in"
-                                leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-1">
-                                <PopoverPanel
-                                    class="absolute left-1/2 -translate-x-1/2 mt-1 w-56 bg-surface border border-outline-variant rounded shadow-layer-2 py-1 z-20">
-                                    <NuxtLink v-for="child in item.children" :key="child.id" :to="menuHref(child)"
-                                        :target="child.target"
-                                        class="block px-4 py-2 text-body-md text-on-surface hover:bg-surface-container-low transition-colors">
-                                        {{ child.title }}
-                                    </NuxtLink>
-                                </PopoverPanel>
-                            </transition>
-                        </Popover>
-                    </template>
+                    <PublicNavItem v-for="item in menu" :key="item.id" :item="item" :depth="0" />
                 </nav>
 
                 <div class="flex items-center gap-2 lg:gap-1 shrink-0 lg:justify-self-end">
@@ -147,44 +115,18 @@ function handleSearchKeydown(event: KeyboardEvent) {
                     enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 -translate-y-2">
-                    <nav
-                        class="bg-primary border-t border-on-primary/10 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-layer-2">
-                        <div class="px-margin py-md space-y-1">
-                            <NuxtLink to="/"
-                                class="block px-3 py-2.5 rounded text-body-md text-on-primary hover:bg-on-primary/10 transition-colors"
-                                @click="isMobileMenuOpen = false">
-                                Beranda
-                            </NuxtLink>
+                    <div class="px-6 py-6 space-y-2 bg-primary">
+                        <NuxtLink to="/"
+                            class="flex items-center min-h-[44px] px-4 rounded-md text-body-md text-white hover:bg-white/10 active:bg-white/15 transition-colors"
+                            @click="isMobileMenuOpen = false">
+                            Beranda
+                        </NuxtLink>
 
-                            <template v-for="item in menu" :key="item.id">
-                                <NuxtLink v-if="!item.children.length" :to="menuHref(item)" :target="item.target"
-                                    class="block px-3 py-2.5 rounded text-body-md text-on-primary hover:bg-on-primary/10 transition-colors"
-                                    @click="isMobileMenuOpen = false">
-                                    {{ item.title }}
-                                </NuxtLink>
+                        <div class="h-px bg-white/10 my-3"></div>
 
-                                <div v-else>
-                                    <button
-                                        class="w-full flex items-center justify-between px-3 py-2.5 rounded text-body-md text-on-primary hover:bg-on-primary/10 transition-colors"
-                                        @click="toggleMobileGroup(item.id)">
-                                        <span>{{ item.title }}</span>
-                                        <Icon name="lucide:chevron-down" size="16" class="transition-transform"
-                                            :class="openMobileGroups.has(item.id) && 'rotate-180'" />
-                                    </button>
-
-                                    <div v-show="openMobileGroups.has(item.id)"
-                                        class="pl-3 border-l border-on-primary/20 ml-3 mt-1 space-y-1">
-                                        <NuxtLink v-for="child in item.children" :key="child.id" :to="menuHref(child)"
-                                            :target="child.target"
-                                            class="block px-3 py-2 rounded text-body-md text-on-primary/90 hover:bg-on-primary/10 hover:text-on-primary transition-colors"
-                                            @click="isMobileMenuOpen = false">
-                                            {{ child.title }}
-                                        </NuxtLink>
-                                    </div>
-                                </div>
-                            </template>
-                        </div>
-                    </nav>
+                        <PublicMobileNavItem v-for="item in menu" :key="item.id" :item="item"
+                            @navigate="isMobileMenuOpen = false" />
+                    </div>
                 </transition>
             </div>
         </transition>
