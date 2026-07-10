@@ -1,11 +1,13 @@
 <script setup></script>
+<!-- <UIThemeSwitcher /> -->
 
 <template>
     <div>
-        <PublicBannerCarousel />
-        <!-- <UIThemeSwitcher /> -->
+        <PublicContainer>
+            <PublicBannerCarousel />
+            <PublicHomeLatestNews />
+            <PublicHomeGalleryPreview />
+            <PublicHomeContactMap />
+        </PublicContainer>
     </div>
-    <!-- <p>
-        Halaman Public
-    </p> -->
 </template>

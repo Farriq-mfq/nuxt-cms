@@ -65,7 +65,7 @@ const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
             </template>
             <template #cell-action="{ row, refresh }">
                 <div class="flex items-center justify-end gap-2">
-                    <UIButtonCopy :text="`/p/${row.slug}`" :success-message="'Link berhasil disalin'" />
+                    <UIButtonCopy :text="`/${row.slug}`" :success-message="'Link berhasil disalin'" />
                     <NuxtLink class="text-secondary hover:underline text-label-md"
                         :to="`/_admins/pages/${row.id}/edit`">
                         <Icon name="lucide:edit" size="18" />

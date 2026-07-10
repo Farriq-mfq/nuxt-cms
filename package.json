@@ -37,6 +37,7 @@
     "bcrypt": "^6.0.0",
     "date-fns": "^4.4.0",
     "drizzle-orm": "^0.45.2",
+    "isomorphic-dompurify": "^3.18.0",
     "izitoast": "^1.4.0",
     "mysql2": "^3.22.5",
     "nanoid": "^5.1.16",

@@ -25,7 +25,7 @@ const activeSocials = computed(() => {
 
 <template>
     <footer class="bg-primary text-on-primary">
-        <div class="max-w-7xl mx-auto px-sm xs:px-0 py-xl">
+        <div class="max-w-7xl mx-auto px-md xs:px-0 py-xl">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-lg">
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-2 mb-sm">

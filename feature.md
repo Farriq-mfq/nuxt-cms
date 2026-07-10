@@ -27,5 +27,17 @@
 2. Fix Menu Tidak Recursive
 3. Fix Menu Tampilan Desktop di buat full width dan kolumn serta tampilan mobile tidak perlu di ubah
 4. Make Full Beranda
-5. Make Page /p/{slug}
+5. Make Page /{slug}
 6. Make News /berita/{slug}
+7. Make Pdf Viewer
+
+# Revisi Beranda
+1. Urutan 
+   1. Banner
+   2. Berita Baru
+   3. Galeri Foto
+   4. Google Map
+2. Revisi Tampilan
+   1. Card Berita dibuat full thumbnail dengan title di atas thumbnail
+   2. Card Galeri dibuat full thumbnail dengan title di atas thumbnail
+   3. Pada Bagian Berita Baru di bagi menjadi 2 kolom berita baru 2 dan lanjutan berita baru tanpa foto hanya list berita baru tanpa foto 

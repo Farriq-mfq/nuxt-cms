@@ -1,11 +1,13 @@
-import { asc } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 import { db } from "~~/server/db";
-import { relatedLinks } from "~~/server/db/schema";
+import { relatedLinks } from "~~/server/db/schema/related-links";
 
 export default defineEventHandler(async () => {
-  const links = await db
+  const items = await db
     .select()
     .from(relatedLinks)
+    .where(eq(relatedLinks.isActive, true))
     .orderBy(asc(relatedLinks.order));
-  return successResponse(links, "Related link berhasil diambil");
+
+  return successResponse(items, "Related links berhasil diambil");
 });

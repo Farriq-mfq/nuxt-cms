@@ -7,6 +7,8 @@ const { menu } = usePublicMenu()
 const isMobileMenuOpen = ref(false)
 const isScrolled = ref(false)
 const router = useRouter()
+const route = useRoute()
+
 
 const openMobileGroups = ref<Set<number>>(new Set())
 
@@ -63,10 +65,10 @@ function handleSearchKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape') closeSearch()
 }
 </script>
-
+<!-- lg:bg-black lg:bg-opacity-10 lg:backdrop-filter lg:backdrop-blur-lg -->
 <template>
     <header class="sticky top-0 z-40 bg-primary transition-shadow" :class="isScrolled && 'shadow-layer-2'">
-        <div class="max-w-7xl mx-auto px-sm xs:px-0">
+        <div class="max-w-7xl mx-auto px-md xs:px-0">
             <div class="flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between h-16 gap-4">
                 <NuxtLink to="/" class="flex items-center gap-2 shrink-0 lg:justify-self-start"
                     @click="isMobileMenuOpen = false">
@@ -78,7 +80,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
                     </span>
                 </NuxtLink>
 
-                <nav class="hidden lg:flex items-center gap-1 lg:justify-self-center">
+                <nav :key="route.fullPath" class="hidden lg:flex items-center gap-1 lg:justify-self-center">
                     <NuxtLink to="/"
                         class="px-4 py-2 rounded text-body-md text-white/70 hover:text-white transition-colors relative whitespace-nowrap after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
                         Beranda
