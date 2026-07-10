@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
 const slug = route.params.slug as string
-const { setting } = useSetting()
 
 const { data, error } = await useAsyncData(`public-page-${slug}`, () =>
     $fetch(`/api/public/pages/${slug}`)
@@ -33,6 +32,54 @@ function handleToc(items: typeof toc.value) {
     toc.value = items
 }
 
+const activeHeadingId = ref<string | null>(null)
+const readProgress = ref(0)
+let observer: IntersectionObserver | null = null
+
+function setupScrollSpy() {
+    observer?.disconnect()
+    if (!toc.value.length) return
+
+    observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    activeHeadingId.value = entry.target.id
+                }
+            })
+        },
+        { rootMargin: '-96px 0px -70% 0px', threshold: 0 }
+    )
+
+    toc.value.forEach((item) => {
+        const el = document.getElementById(item.id)
+        if (el) observer!.observe(el)
+    })
+}
+
+function updateReadProgress() {
+    const scrollTop = window.scrollY
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight
+    readProgress.value = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0
+}
+
+watch(toc, async () => {
+    await nextTick()
+    setupScrollSpy()
+    if (toc.value.length && !activeHeadingId.value) {
+        activeHeadingId.value = toc.value[0].id
+    }
+})
+
+onMounted(() => {
+    window.addEventListener('scroll', updateReadProgress, { passive: true })
+})
+
+onBeforeUnmount(() => {
+    observer?.disconnect()
+    window.removeEventListener('scroll', updateReadProgress)
+})
+
 function scrollToHeading(id: string) {
     const el = document.getElementById(id)
     if (el) {
@@ -45,9 +92,6 @@ function formatDate(date: string | undefined): string {
     return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-function handlePrint() {
-    window.print()
-}
 
 const isCopied = ref(false)
 async function handleShare() {
@@ -60,11 +104,9 @@ async function handleShare() {
 </script>
 
 <template>
-    <div v-if="page" class="bg-surface-container-lowest">
-        <PublicBreadcrumb :items="[{ label: 'Beranda', to: '/' }, { label: page.title }]" />
-
-        <div class="max-w-6xl mx-auto px-margin py-xl">
-            <header class="mb-xl">
+    <div v-if="page">
+        <PublicContainer>
+            <header>
                 <div class="flex items-start gap-4">
                     <div class="w-1 shrink-0 bg-secondary self-stretch min-h-[3.5rem]"></div>
                     <div>
@@ -76,16 +118,11 @@ async function handleShare() {
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-4 mt-md pl-5 text-label-md text-on-surface-variant">
+                <div class="flex flex-wrap items-center gap-4 mt-md text-label-md text-on-surface-variant">
                     <span v-if="page.updatedAt" class="flex items-center gap-1.5">
                         <Icon name="lucide:calendar-clock" size="14" />
                         Diperbarui {{ formatDate(page.updatedAt) }}
                     </span>
-                    <button class="flex items-center gap-1.5 hover:text-secondary transition-colors"
-                        @click="handlePrint">
-                        <Icon name="lucide:printer" size="14" />
-                        Cetak
-                    </button>
                     <button class="flex items-center gap-1.5 hover:text-secondary transition-colors"
                         @click="handleShare">
                         <Icon :name="isCopied ? 'lucide:check' : 'lucide:link'" size="14" />
@@ -93,38 +130,55 @@ async function handleShare() {
                     </button>
                 </div>
             </header>
+            <PublicHr class="sm:hidden" />
 
-            <div class="grid lg:grid-cols-[1fr_260px] gap-xl items-start">
+            <div class="grid lg:grid-cols-[1fr_260px] gap-xl items-start sm:mt-lg mt-0">
                 <div class="order-2 lg:order-1">
                     <PublicRichContent :content="page.content" generate-toc @toc="handleToc" />
                 </div>
 
                 <aside v-if="toc.length" class="order-1 lg:order-2 lg:sticky lg:top-24">
-                    <div class="border border-outline-variant rounded bg-white p-4 shadow-layer-1">
+                    <div class="relative pl-5">
+                        <div
+                            class="absolute left-0 top-1 bottom-1 w-0.5 bg-outline-variant rounded-full overflow-hidden">
+                            <div class="w-full bg-secondary rounded-full transition-all duration-300 ease-out"
+                                :style="{ height: `${readProgress}%` }" />
+                        </div>
+
                         <span
-                            class="text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2">
+                            class="text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2 mb-3">
                             <Icon name="lucide:list" size="14" />
                             Daftar Isi
                         </span>
 
-                        <nav class="mt-3 space-y-0.5">
-                            <button v-for="item in toc" :key="item.id"
-                                class="block w-full text-left text-body-md text-on-surface-variant hover:text-secondary transition-colors py-1.5"
-                                :class="item.level === 3 && 'pl-4 text-label-md'" @click="scrollToHeading(item.id)">
-                                {{ item.text }}
+                        <nav class="space-y-1">
+                            <button v-for="(item, index) in toc" :key="item.id"
+                                class="group relative w-full text-left flex items-baseline gap-2.5 py-2 pr-2 rounded transition-colors"
+                                :class="[
+                                    item.level === 3 && 'pl-4',
+                                    activeHeadingId === item.id ? 'text-secondary' : 'text-on-surface-variant hover:text-on-surface',
+                                ]" @click="scrollToHeading(item.id)">
+                                <span class="text-label-md tabular-nums shrink-0 transition-colors"
+                                    :class="activeHeadingId === item.id ? 'text-secondary font-semibold' : 'text-on-surface-variant/50'">
+                                    {{ String(index + 1).padStart(2, '0') }}
+                                </span>
+
+                                <span class="text-body-md leading-snug transition-all"
+                                    :class="activeHeadingId === item.id ? 'font-semibold' : ''">
+                                    {{ item.text }}
+                                </span>
+
+                                <span v-if="activeHeadingId === item.id"
+                                    class="absolute -left-[22px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-secondary" />
                             </button>
                         </nav>
                     </div>
                 </aside>
             </div>
 
-            <div
-                class="mt-xl pt-md border-t border-outline-variant flex items-center gap-2 text-label-md text-on-surface-variant">
-                <Icon name="lucide:info" size="14" />
-                Informasi pada halaman ini dikelola resmi oleh {{ setting.appName }}.
-            </div>
-        </div>
+        </PublicContainer>
     </div>
+
 </template>
 
 <style>

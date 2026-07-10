@@ -1,3 +1,6 @@
+<script setup lang="ts">
+const { setting } = useSetting()
+</script>
 <template>
     <div class="min-h-screen flex items-center justify-center bg-surface-container-lowest px-md">
         <div class="w-full max-w-sm">

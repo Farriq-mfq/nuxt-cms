@@ -84,9 +84,9 @@ watchEffect(() => {
 
 const proseClass = computed(() => {
     switch (props.proseSize) {
-        case 'sm': return 'prose-sm'
-        case 'base': return 'prose'
-        default: return 'prose-lg'
+        case 'sm': return 'prose-sm text-on-surface'
+        case 'base': return 'prose text-on-surface'
+        default: return 'prose-lg text-on-surface'
     }
 })
 </script>

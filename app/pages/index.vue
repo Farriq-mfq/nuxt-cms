@@ -1,12 +1,14 @@
 <script setup></script>
-<!-- <UIThemeSwitcher /> -->
 
 <template>
     <div>
         <PublicContainer>
             <PublicBannerCarousel />
+            <PublicHr />
             <PublicHomeLatestNews />
+            <PublicHr />
             <PublicHomeGalleryPreview />
+            <PublicHr />
             <PublicHomeContactMap />
         </PublicContainer>
     </div>

@@ -1,6 +1,6 @@
 import { and, eq, or, like, desc } from "drizzle-orm";
 import { db } from "~~/server/db";
-import { news } from "~~/server/db/schema/news";
+import { news, newsCategories } from "~~/server/db/schema/news";
 import { z } from "zod";
 
 const publicNewsQuerySchema = z.object({
@@ -17,21 +17,32 @@ export default defineEventHandler(async (event) => {
   const { page, limit, search, categorySlug } = parsed.data;
   const offset = (page - 1) * limit;
 
+  let categoryId: number | undefined;
+  if (categorySlug) {
+    const category = await db
+      .select({ id: newsCategories.id })
+      .from(newsCategories)
+      .where(eq(newsCategories.slug, categorySlug))
+      .limit(1);
+    categoryId = category[0]?.id;
+  }
+
   const searchCondition = search
     ? or(like(news.title, `%${search}%`), like(news.excerpt, `%${search}%`))
     : undefined;
 
-  const where = and(eq(news.isPublished, true), searchCondition);
+  const where = and(
+    eq(news.isPublished, true),
+    searchCondition,
+    categoryId !== undefined ? eq(news.categoryId, categoryId) : undefined,
+  );
 
   const items = await db.query.news.findMany({
     where,
     orderBy: desc(news.publishedAt),
     limit,
     offset,
-    with: {
-      category: true,
-      thumbnail: true,
-    },
+    with: { category: true, thumbnail: true },
   });
 
   const totalResult = await db.query.news.findMany({ where });

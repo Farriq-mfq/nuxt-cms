@@ -78,6 +78,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
                     <span v-else class="text-headline-md text-on-primary whitespace-nowrap">
                         {{ setting?.appName }}
                     </span>
+                    <!-- <UIThemeSwitcher /> -->
                 </NuxtLink>
 
                 <nav :key="route.fullPath" class="hidden lg:flex items-center gap-1 lg:justify-self-center">

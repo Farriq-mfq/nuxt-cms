@@ -16,8 +16,8 @@ function formatDate(date: string | null): string {
 </script>
 
 <template>
-    <NuxtLink :to="`/berita/${news.slug}`" class="group flex items-start gap-3 py-3.5 first:pt-0 last:pb-0">
-        <div class="w-1 h-1 rounded-full bg-secondary mt-2.5 shrink-0"></div>
+    <NuxtLink :to="`/berita/${news.slug}`" class="group flex items-center gap-3 py-3.5 first:pt-0 last:pb-0">
+        <Icon name="lucide:chevron-right" size="16" class="text-on-surface-variant shrink-0" />
 
         <div class="min-w-0">
             <h4

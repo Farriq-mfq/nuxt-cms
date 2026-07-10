@@ -9,11 +9,13 @@ const listNews = computed(() => allNews.value.slice(2))
 </script>
 
 <template>
-    <section v-if="allNews.length" class="py-xl">
+    <section v-if="allNews.length">
         <div class="flex items-end justify-between mb-md">
-            <div>
-                <span class="text-label-md uppercase tracking-widest text-secondary">Terkini</span>
-                <h2 class="text-headline-lg text-on-surface mt-1">Berita Terbaru</h2>
+            <div class="flex items-start gap-4">
+                <div class="w-1 shrink-0 bg-secondary self-stretch min-h-[3rem]"></div>
+                <div>
+                    <h2 class="text-headline-lg text-on-surface mt-1">Berita Terbaru</h2>
+                </div>
             </div>
             <NuxtLink to="/berita"
                 class="hidden sm:flex items-center gap-1 text-body-md text-secondary hover:underline">
@@ -27,14 +29,8 @@ const listNews = computed(() => allNews.value.slice(2))
                 <PublicNewsCard v-for="item in featuredNews" :key="item.id" :news="item" />
             </div>
 
-            <div v-if="listNews.length" class="bg-white border border-outline-variant rounded shadow-layer-1 p-5">
-                <span
-                    class="text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2 mb-1">
-                    <Icon name="lucide:newspaper" size="14" />
-                    Berita Lainnya
-                </span>
-
-                <div class="divide-y divide-outline-variant">
+            <div v-if="listNews.length">
+                <div class="divide-y divide-outline-variant max-w-xs">
                     <PublicNewsListItem v-for="item in listNews" :key="item.id" :news="item" />
                 </div>
             </div>

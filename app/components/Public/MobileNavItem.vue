@@ -26,15 +26,14 @@ function menuHref(item: MenuNode): string {
 
 <template>
     <NuxtLink v-if="!item.children.length" :to="menuHref(item)" :target="item.target"
-        class="flex items-center min-h-[44px] px-4 rounded-md text-body-md transition-colors"
+        class="flex items-center min-h-[44px] px-4 text-body-md transition-colors"
         :class="depth === 0 ? 'text-white hover:bg-white/10 active:bg-white/15' : 'text-white/90 hover:bg-white/10 hover:text-white active:bg-white/15 min-h-[40px]'"
         @click="emit('navigate')">
         {{ item.title }}
     </NuxtLink>
 
     <div v-else>
-        <button
-            class="w-full flex items-center justify-between min-h-[44px] px-4 rounded-md text-body-md transition-colors"
+        <button class="w-full flex items-center justify-between min-h-[44px] px-4 text-body-md transition-colors"
             :class="depth === 0 ? 'text-white hover:bg-white/10 active:bg-white/15' : 'text-white/90 hover:bg-white/10 hover:text-white active:bg-white/15 min-h-[40px]'"
             @click="isOpen = !isOpen">
             <span>{{ item.title }}</span>
