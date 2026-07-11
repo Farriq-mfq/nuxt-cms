@@ -50,11 +50,16 @@ async function handleShare() {
                     class="inline-flex bg-secondary-container/30 text-on-secondary-container text-label-md rounded-full px-3 py-1 mb-3">
                     {{ item.category.name }}
                 </div>
-
-                <h1
-                    class="text-display-lg-mobile lg:text-display-lg text-on-surface font-extrabold leading-tight max-w-xs">
-                    {{ item.title }}
-                </h1>
+                <div class="flex items-start gap-4">
+                    <div class="w-1 shrink-0 bg-secondary self-stretch min-h-[3.5rem]"></div>
+                    <div>
+                        <span class="text-label-md uppercase tracking-widest text-secondary">Berita</span>
+                        <h1
+                            class="text-display-lg-mobile lg:text-display-lg text-on-surface font-extrabold leading-tight mt-1">
+                            {{ item.title }}
+                        </h1>
+                    </div>
+                </div>
 
                 <div class="flex flex-wrap items-center gap-4 mt-md text-label-md text-on-surface-variant">
                     <span v-if="item.publishedAt" class="flex items-center gap-1.5">

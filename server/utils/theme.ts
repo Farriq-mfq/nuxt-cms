@@ -57,11 +57,13 @@ export const BASE_THEMES: BaseThemeOption[] = [
   { name: "olive", label: "Olive", color: "#5b6200" },
 ];
 
-export function getBaseThemeName(theme: ThemeName): string {
+export function getBaseThemeName(theme: ThemeName | undefined | null): string {
+  if (!theme) return "default";
   return theme.endsWith("-dark") ? theme.slice(0, -5) : theme;
 }
 
-export function isDarkTheme(theme: ThemeName): boolean {
+export function isDarkTheme(theme: ThemeName | undefined | null): boolean {
+  if (!theme) return false;
   return theme.endsWith("-dark");
 }
 
