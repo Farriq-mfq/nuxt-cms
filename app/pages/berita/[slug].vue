@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -27,10 +29,6 @@ useHead({
     ],
 })
 
-function formatDate(date: string | null | undefined): string {
-    if (!date) return ''
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 
 const isCopied = ref(false)
 async function handleShare() {
@@ -64,7 +62,7 @@ async function handleShare() {
                 <div class="flex flex-wrap items-center gap-4 mt-md text-label-md text-on-surface-variant">
                     <span v-if="item.publishedAt" class="flex items-center gap-1.5">
                         <Icon name="lucide:calendar" size="14" />
-                        {{ formatDate(item.publishedAt) }}
+                        {{ format(item.publishedAt, 'dd MMMM yyyy', { locale: id }) }}
                     </span>
                     <span v-if="item.author" class="flex items-center gap-1.5">
                         <Icon name="lucide:user" size="14" />

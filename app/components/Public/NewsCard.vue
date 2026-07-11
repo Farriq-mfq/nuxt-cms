@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 defineProps<{
     news: {
         id: number
@@ -10,10 +12,6 @@ defineProps<{
     }
 }>()
 
-function formatDate(date: string | null): string {
-    if (!date) return ''
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 </script>
 
 <template>
@@ -38,7 +36,7 @@ function formatDate(date: string | null): string {
 
             <div class="flex items-center gap-1.5 text-label-md text-white/70 mt-2">
                 <Icon name="lucide:calendar" size="12" />
-                {{ formatDate(news.publishedAt) }}
+                {{ format(news.publishedAt, 'dd MMMM yyyy', { locale: id }) }}
             </div>
         </div>
     </NuxtLink>

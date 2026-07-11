@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -87,10 +89,6 @@ function scrollToHeading(id: string) {
     }
 }
 
-function formatDate(date: string | undefined): string {
-    if (!date) return ''
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 
 
 const isCopied = ref(false)
@@ -121,7 +119,7 @@ async function handleShare() {
                 <div class="flex flex-wrap items-center gap-4 mt-md text-label-md text-on-surface-variant">
                     <span v-if="page.updatedAt" class="flex items-center gap-1.5">
                         <Icon name="lucide:calendar-clock" size="14" />
-                        Diperbarui {{ formatDate(page.updatedAt) }}
+                        Diperbarui {{ format(page.updatedAt, 'dd MMMM yyyy', { locale: id }) }}
                     </span>
                     <button class="flex items-center gap-1.5 hover:text-secondary transition-colors"
                         @click="handleShare">

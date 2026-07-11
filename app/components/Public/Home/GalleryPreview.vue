@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 const { data } = await useAsyncData('home-albums', () =>
     $fetch('/api/public/albums', { query: { limit: 5 } })
 )
@@ -7,10 +9,6 @@ const albumsList = computed(() => data.value?.data ?? [])
 const featured = computed(() => albumsList.value[0])
 const rest = computed(() => albumsList.value.slice(1))
 
-function formatDate(date: string | null): string {
-    if (!date) return ''
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
-}
 </script>
 
 <template>
@@ -54,7 +52,7 @@ function formatDate(date: string | null): string {
                     </h3>
                     <span class="flex items-center gap-1.5 text-label-md text-white/70 mt-2">
                         <Icon name="lucide:calendar" size="12" />
-                        {{ formatDate(featured.createdAt) }}
+                        {{ format(featured.createdAt, 'dd MMMM yyyy', { locale: id }) }}
                     </span>
                 </div>
             </NuxtLink>
@@ -78,7 +76,7 @@ function formatDate(date: string | null): string {
                             {{ album.title }}
                         </h4>
                         <span class="text-label-md text-white/60 mt-0.5">
-                            {{ formatDate(album.createdAt) }}
+                            {{ format(album.createdAt, 'dd MMMM yyyy', { locale: id }) }}
                         </span>
                     </div>
                 </NuxtLink>

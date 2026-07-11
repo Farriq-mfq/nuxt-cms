@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
+
 defineProps<{
     news: {
         id: number
@@ -9,10 +12,6 @@ defineProps<{
     }
 }>()
 
-function formatDate(date: string | null): string {
-    if (!date) return ''
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
-}
 </script>
 
 <template>
@@ -27,7 +26,7 @@ function formatDate(date: string | null): string {
             <div class="flex items-center gap-2 text-label-md text-on-surface-variant mt-1">
                 <span v-if="news.category">{{ news.category.name }}</span>
                 <span v-if="news.category">•</span>
-                <span>{{ formatDate(news.publishedAt) }}</span>
+                <span>{{ format(news.publishedAt, 'dd MMMM yyyy', { locale: id }) }}</span>
             </div>
         </div>
     </NuxtLink>

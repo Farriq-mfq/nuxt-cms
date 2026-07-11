@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 const route = useRoute()
 const router = useRouter()
 
@@ -30,9 +32,6 @@ watch(page, () => {
     router.replace({ query: page.value > 1 ? { page: page.value } : {} })
 })
 
-function formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 </script>
 
 <template>
@@ -83,7 +82,7 @@ function formatDate(date: string): string {
                             {{ album.title }}
                         </h3>
                         <span class="text-label-md text-white/60 mt-0.5">
-                            {{ formatDate(album.createdAt) }}
+                            {{ format(album.createdAt, 'dd MMMM yyyy', { locale: id }) }}
                         </span>
                     </div>
                 </NuxtLink>
@@ -96,7 +95,7 @@ function formatDate(date: string): string {
                     <Icon name="lucide:chevron-left" size="16" />
                 </button>
                 <span class="text-body-md text-on-surface-variant px-3">Halaman {{ meta.page }} dari {{ meta.totalPages
-                    }}</span>
+                }}</span>
                 <button :disabled="!meta.hasNextPage"
                     class="px-4 py-2 rounded border border-outline-variant text-body-md disabled:opacity-40 hover:bg-surface-container-low transition-colors"
                     @click="page++">

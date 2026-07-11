@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -21,10 +23,6 @@ useHead({
     ],
 })
 
-function formatDate(date: string | undefined): string {
-    if (!date) return ''
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 
 const lightboxIndex = ref<number | null>(null)
 
@@ -79,7 +77,7 @@ onBeforeUnmount(() => {
                 <div class="flex flex-wrap items-center gap-4 mt-md pl-5 text-label-md text-on-surface-variant">
                     <span class="flex items-center gap-1.5">
                         <Icon name="lucide:calendar" size="14" />
-                        {{ formatDate(album.createdAt) }}
+                        {{ format(album.createdAt, 'dd MMMM yyyy', { locale: id }) }}
                     </span>
                     <span class="flex items-center gap-1.5">
                         <Icon name="lucide:image" size="14" />

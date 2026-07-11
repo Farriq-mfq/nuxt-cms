@@ -54,10 +54,6 @@ watch(searchInput, (val) => {
     }, 400)
 })
 
-function formatDate(date: string | null): string {
-    if (!date) return ''
-    return new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-}
 </script>
 
 <template>
