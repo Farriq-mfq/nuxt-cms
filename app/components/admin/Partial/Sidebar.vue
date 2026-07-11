@@ -89,7 +89,7 @@ watchEffect(() => {
         <div class="h-16 flex items-center border-b border-surface/10 shrink-0"
             :class="isOpen ? 'justify-between px-md' : 'justify-center'">
             <span v-if="isOpen" class="text-headline-md font-bold surfacespace-nowrap overflow-hidden uppercase">
-                Panel
+                Admin Panel
             </span>
             <button type="button" class="p-1.5 rounded hover:bg-surface/10 transition-colors" @click="toggle">
                 <Icon :name="isOpen ? 'lucide:panel-left-close' : 'lucide:panel-left-open'" size="20" />
