@@ -2,8 +2,11 @@ import { eq } from "drizzle-orm";
 import { db } from "~~/server/db";
 import { menus } from "~~/server/db/schema";
 import { createMenuSchema } from "~~/server/validators/menu";
+import { requirePermission } from "~~/server/utils/require-permission";
 
 export default defineEventHandler(async (event) => {
+  const { error } = await requirePermission(event, "menu");
+  if (error) return error;
   const body = await readBody(event);
   const parsed = createMenuSchema.safeParse(body);
 

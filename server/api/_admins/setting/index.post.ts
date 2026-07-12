@@ -8,8 +8,12 @@ import {
   saveAssetRaw,
   deleteAssetFile,
 } from "~~/server/utils/upload";
+import { requirePermission } from "~~/server/utils/require-permission";
 
 export default defineEventHandler(async (event) => {
+  const { error } = await requirePermission(event, "setting");
+  if (error) return error;
+
   const { fields, files } = await parseMultipartBody(event);
 
   const rawBody = {

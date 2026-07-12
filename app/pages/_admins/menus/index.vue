@@ -5,6 +5,12 @@ definePageMeta({
     layout: 'admin',
 })
 
+const { can } = useAuth()
+
+if (!can('menu')) {
+    throw createError({ statusCode: 403, statusMessage: 'Kamu tidak memiliki akses ke halaman ini', fatal: true })
+}
+
 const columns = [
     { key: 'title', label: 'Judul', sortable: true },
     { key: 'icon', label: 'Icon', align: 'center' as const },

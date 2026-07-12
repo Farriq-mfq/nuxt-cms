@@ -145,7 +145,7 @@ function fieldError(key: string) {
                         <label class="block text-label-md uppercase tracking-wide text-on-surface-variant mb-1">
                             Nama Lengkap <span class="text-error">*</span>
                         </label>
-                        <input v-model="adminForm.name" type="text" placeholder="Nama kamu" :disabled="isSubmitting"
+                        <input v-model="adminForm.name" type="text" placeholder="Nama" :disabled="isSubmitting"
                             class="w-full bg-surface-container-low border rounded px-4 py-2 text-body-md outline-none transition-colors disabled:opacity-50"
                             :class="fieldError('admin.name') ? 'border-error' : 'border-outline-variant focus:border-secondary'" />
                         <p v-if="fieldError('admin.name')" class="text-label-md text-error mt-1">{{

@@ -36,7 +36,7 @@ async function handleLogout() {
         </div>
 
         <div class="flex items-center gap-3">
-            <UIThemeSwitcher />
+            <!-- <UIThemeSwitcher /> -->
 
             <Menu as="div" class="relative">
                 <MenuButton
@@ -54,14 +54,14 @@ async function handleLogout() {
                     leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
                     <MenuItems
                         class="absolute right-0 mt-2 w-48 bg-surface border border-outline-variant rounded shadow-layer-2 py-1 z-30 focus:outline-none">
-                        <MenuItem v-slot="{ active }">
+                        <!-- <MenuItem v-slot="{ active }">
                             <NuxtLink to="/_admins/profile"
                                 class="flex items-center gap-2 px-4 py-2 text-body-md text-on-surface"
                                 :class="active && 'bg-surface-container-low'">
                                 <Icon name="lucide:user" size="16" />
                                 Profil
                             </NuxtLink>
-                        </MenuItem>
+                        </MenuItem> -->
                         <MenuItem v-slot="{ active }">
                             <button type="button"
                                 class="w-full flex items-center gap-2 px-4 py-2 text-body-md text-error"

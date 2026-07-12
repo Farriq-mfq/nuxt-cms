@@ -4,11 +4,12 @@ interface MenuItem {
     icon?: string
     to?: string
     children?: MenuItem[]
+    resource?: 'setting' | 'menu' | 'admin'
 }
 
-const menuItems: MenuItem[] = [
+const RAW_MENU_ITEMS: MenuItem[] = [
     { label: 'Dashboard', icon: 'lucide:layout-dashboard', to: '/_admins' },
-    { label: 'Menu', icon: 'lucide:menu', to: '/_admins/menus' },
+    { label: 'Menu', icon: 'lucide:menu', to: '/_admins/menus', resource: 'menu' },
     { label: 'Banner', icon: 'lucide:image', to: '/_admins/banners' },
     {
         label: "Kategori Berita",
@@ -33,16 +34,43 @@ const menuItems: MenuItem[] = [
         ],
     },
     { label: 'Related Link', icon: 'lucide:link', to: '/_admins/related-links' },
+    { label: 'Admin', icon: 'lucide:users', to: '/_admins/admins', resource: 'admin' },
     { label: 'Preview Website', icon: 'lucide:globe', to: '/' },
-    { label: 'Setting', icon: 'lucide:settings', to: '/_admins/setting' },
+    { label: 'Setting', icon: 'lucide:settings', to: '/_admins/setting', resource: 'setting' },
 ]
 
 const EXACT_MATCH_PATHS = ['/_admins', '/']
 
 const route = useRoute()
 const { isOpen, toggle } = useSidebar()
+const { user } = useUserSession()
 
 const openGroups = ref<Set<string>>(new Set())
+
+// Permission matrix — konsisten dengan server/utils/permissions.ts
+const PERMISSION_MATRIX: Record<string, string[]> = {
+    superadmin: ['setting', 'menu', 'admin'],
+    admin: ['setting', 'menu'],
+    editor: [],
+}
+
+function canAccess(resource?: MenuItem['resource']): boolean {
+    if (!resource) return true // item tanpa `resource` = tidak dibatasi, tampil untuk semua role
+    const role = user.value?.role ?? 'editor'
+    return PERMISSION_MATRIX[role]?.includes(resource) ?? false
+}
+
+// Filter menuItems sesuai role — item & children yang tidak boleh diakses otomatis hilang dari sidebar
+const menuItems = computed<MenuItem[]>(() => {
+    return RAW_MENU_ITEMS
+        .filter((item) => canAccess(item.resource))
+        .map((item) => {
+            if (!item.children) return item
+            const filteredChildren = item.children.filter((child) => canAccess(child.resource))
+            return { ...item, children: filteredChildren }
+        })
+        .filter((item) => !item.children || item.children.length > 0) // buang grup yang jadi kosong setelah difilter
+})
 
 function isActive(to?: string): boolean {
     if (!to) return false
@@ -75,7 +103,7 @@ function isGroupOpen(item: MenuItem): boolean {
 }
 
 watchEffect(() => {
-    for (const item of menuItems) {
+    for (const item of menuItems.value) {
         if (item.children && isChildActive(item)) {
             openGroups.value.add(item.label)
         }

@@ -2,7 +2,6 @@ import { eq } from "drizzle-orm";
 import { db } from "~~/server/db";
 import { _admins } from "~~/server/db/schema";
 import { loginSchema } from "~~/server/validators/auth";
-import { verifyPasswordLocal } from "~~/server/utils/password";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -32,7 +31,7 @@ export default defineEventHandler(async (event) => {
     return errorResponse(403, "Akun tidak aktif, hubungi superadmin");
   }
 
-  const isValid = await verifyPasswordLocal(admin.password, password);
+  const isValid = await verifyPassword(admin.password, password);
 
   if (!isValid) {
     return errorResponse(401, "Validasi gagal", [

@@ -2,6 +2,11 @@
 definePageMeta({ layout: 'admin' })
 useHead({ title: 'Pengaturan Website' })
 import { BASE_THEMES } from '~~/server/utils/theme'
+const { can } = useAuth()
+
+if (!can('setting')) {
+    throw createError({ statusCode: 403, statusMessage: 'Kamu tidak memiliki akses ke halaman ini', fatal: true })
+}
 
 const formRef = ref()
 
