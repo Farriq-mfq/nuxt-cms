@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRoute } from '#imports'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 interface NavItem {
@@ -18,6 +19,8 @@ const props = defineProps<{
 
 const emit = defineEmits<{ (e: 'navigate'): void }>()
 
+const route = useRoute()
+
 function menuHref(item: NavItem): string {
     return item.url || `/${item.slug ?? ''}`
 }
@@ -25,6 +28,23 @@ function menuHref(item: NavItem): string {
 function handleNavigate() {
     emit('navigate')
 }
+
+function isHrefActive(href: string): boolean {
+    if (!href || href.startsWith('http') || href.startsWith('//')) return false
+    if (href === '/') return route.path === '/'
+    return route.path === href || route.path.startsWith(href + '/')
+}
+
+function isItemActive(item: NavItem): boolean {
+    return isHrefActive(menuHref(item))
+}
+
+function isItemOrDescendantActive(item: NavItem): boolean {
+    if (!item.children.length) return isItemActive(item)
+    return item.children.some((child) => isItemOrDescendantActive(child))
+}
+
+const active = computed(() => isItemOrDescendantActive(props.item))
 
 const COLUMN_COUNT = 4
 
@@ -45,20 +65,36 @@ const columns = computed(() => {
 
 <template>
     <NuxtLink v-if="!item.children.length" :to="menuHref(item)" :target="item.target"
-        class="text-body-md transition-colors whitespace-nowrap text-white/70 w-full flex items-center gap-2" :class="depth === 0
-            ? 'px-4 py-2 text-white/70 hover:text-white relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform'
-            : 'px-4 py-2.5 text-on-surface bg-primary-container/5 hover:bg-primary-container/10 hover:text-white'"
-        @click="handleNavigate">
+        class="text-body-md transition-colors whitespace-nowrap w-full flex items-center gap-2" :class="[
+            depth === 0
+                ? 'px-4 py-2 relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:transition-transform'
+                : 'px-4 py-2.5 hover:bg-primary-container/10',
+            active
+                ? depth === 0
+                    ? 'text-white after:scale-x-100'
+                    : 'text-white bg-primary-container/10'
+                : depth === 0
+                    ? 'text-white/70 hover:text-white after:scale-x-0 hover:after:scale-x-100'
+                    : 'text-on-surface bg-primary-container/5 hover:text-white'
+        ]" @click="handleNavigate">
         {{ item.title }}
         <Icon v-if="item.target === '_blank'" name="lucide:square-arrow-out-up-right" size="14" />
     </NuxtLink>
 
     <Popover v-else class="relative" :class="depth > 0 && 'w-full'">
-        <PopoverButton
-            class="flex items-center gap-1 transition-colors whitespace-nowrap w-full text-white/70 focus:text-white"
-            :class="depth === 0
-                ? 'px-4 py-2 text-body-md text-white/70 hover:text-white justify-center'
-                : 'px-4 py-2.5 text-body-md text-on-surface hover:bg-primary-container/10 hover:text-white bg-primary-container/5 justify-between'">
+        <PopoverButton class="flex items-center gap-1 transition-colors whitespace-nowrap w-full focus:text-white"
+            :class="[
+                depth === 0
+                    ? 'px-4 py-2 text-body-md justify-center'
+                    : 'px-4 py-2.5 text-body-md justify-between',
+                active
+                    ? depth === 0
+                        ? 'text-white'
+                        : 'text-white bg-primary-container/10'
+                    : depth === 0
+                        ? 'text-white/70 hover:text-white'
+                        : 'text-on-surface bg-primary-container/5 hover:bg-primary-container/10 hover:text-white'
+            ]">
             <div class="flex items-center gap-3">
                 {{ item.title }}
                 <Icon v-if="item.target === '_blank'" name="lucide:square-arrow-out-up-right" size="14" />

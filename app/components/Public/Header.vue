@@ -83,7 +83,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
 
                 <nav :key="route.fullPath" class="hidden lg:flex items-center gap-1 lg:justify-self-center">
                     <NuxtLink to="/"
-                        class="px-4 py-2 rounded text-body-md text-white/70 hover:text-white transition-colors relative whitespace-nowrap after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
+                        class="px-4 py-2 text-body-md text-white/70 hover:text-white transition-colors relative whitespace-nowrap after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform">
                         Beranda
                     </NuxtLink>
 
@@ -120,7 +120,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
                     leave-to-class="opacity-0 -translate-y-2">
                     <div class="px-6 py-6 space-y-2 bg-primary">
                         <NuxtLink to="/"
-                            class="flex items-center min-h-[44px] px-4 rounded-md text-body-md text-white hover:bg-white/10 active:bg-white/15 transition-colors"
+                            class="flex items-center min-h-[44px] px-4 text-body-md text-white hover:bg-white/10 active:bg-white/15 transition-colors"
                             @click="isMobileMenuOpen = false">
                             Beranda
                         </NuxtLink>
