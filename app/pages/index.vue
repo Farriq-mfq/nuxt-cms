@@ -2,8 +2,9 @@
 
 <template>
     <div>
+        <PublicFullBannerCarousel />
+        <!-- <PublicBannerCarousel /> -->
         <PublicContainer>
-            <PublicBannerCarousel />
             <PublicHr />
             <PublicHomeLatestNews />
             <PublicHr />

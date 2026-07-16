@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
+const props = withDefaults(defineProps<{
+    enableTransparent?: boolean
+}>(), {
+    enableTransparent: false,
+})
+
 const { setting } = useSetting()
 const { menu } = usePublicMenu()
 
@@ -8,7 +14,6 @@ const isMobileMenuOpen = ref(false)
 const isScrolled = ref(false)
 const router = useRouter()
 const route = useRoute()
-
 
 const openMobileGroups = ref<Set<number>>(new Set())
 
@@ -31,12 +36,14 @@ function handleScroll() {
 
 onMounted(() => {
     window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
 })
 
 onBeforeUnmount(() => {
     window.removeEventListener('scroll', handleScroll)
 })
 
+const isTransparent = computed(() => props.enableTransparent && !isScrolled.value && !isMobileMenuOpen.value && !isSearchOpen.value)
 
 watch(isMobileMenuOpen, (open) => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -65,9 +72,11 @@ function handleSearchKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape') closeSearch()
 }
 </script>
-<!-- lg:bg-black lg:bg-opacity-10 lg:backdrop-filter lg:backdrop-blur-lg -->
+
 <template>
-    <header class="sticky top-0 z-40 bg-primary transition-shadow" :class="isScrolled && 'shadow-layer-2'">
+    <header class="sticky inset-x-0 top-0 z-40 transition-all duration-300" :class="isTransparent
+        ? 'bg-transparent lg:bg-black/10 lg:backdrop-blur-md'
+        : 'bg-primary shadow-layer-2'">
         <div class="max-w-7xl mx-auto px-md xs:px-0">
             <div class="flex lg:grid lg:grid-cols-[1fr_auto_1fr] items-center justify-between h-16 gap-4">
                 <NuxtLink to="/" class="flex items-center gap-2 shrink-0 lg:justify-self-start"
@@ -78,7 +87,6 @@ function handleSearchKeydown(event: KeyboardEvent) {
                     <span v-else class="text-headline-md text-on-primary whitespace-nowrap">
                         {{ setting?.appName }}
                     </span>
-                    <!-- <UIThemeSwitcher /> -->
                 </NuxtLink>
 
                 <nav :key="route.fullPath" class="hidden lg:flex items-center gap-1 lg:justify-self-center">

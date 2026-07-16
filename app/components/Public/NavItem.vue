@@ -71,29 +71,30 @@ const columns = computed(() => {
                 : 'px-4 py-2.5 hover:bg-primary-container/10',
             active
                 ? depth === 0
-                    ? 'text-white after:scale-x-100'
-                    : 'text-white bg-primary-container/10'
+                    ? 'text-surface-variant after:scale-x-100'
+                    : 'text-surface-variant bg-primary-container/10'
                 : depth === 0
-                    ? 'text-white/70 hover:text-white after:scale-x-0 hover:after:scale-x-100'
-                    : 'text-on-surface bg-primary-container/5 hover:text-white'
+                    ? 'text-surface-variant/70 hover:text-surface-variant after:scale-x-0 hover:after:scale-x-100'
+                    : 'text-surface-variant bg-primary-container/5'
         ]" @click="handleNavigate">
         {{ item.title }}
         <Icon v-if="item.target === '_blank'" name="lucide:square-arrow-out-up-right" size="14" />
     </NuxtLink>
 
     <Popover v-else class="relative" :class="depth > 0 && 'w-full'">
-        <PopoverButton class="flex items-center gap-1 transition-colors whitespace-nowrap w-full focus:text-white"
+        <PopoverButton
+            class="flex items-center gap-1 transition-colors whitespace-nowrap w-full focus:text-surface-variant"
             :class="[
                 depth === 0
                     ? 'px-4 py-2 text-body-md justify-center'
                     : 'px-4 py-2.5 text-body-md justify-between',
                 active
                     ? depth === 0
-                        ? 'text-white'
-                        : 'text-white bg-primary-container/10'
+                        ? 'text-surface-variant'
+                        : 'text-surface-variant bg-primary-container/10'
                     : depth === 0
-                        ? 'text-white/70 hover:text-white'
-                        : 'text-on-surface bg-primary-container/5 hover:bg-primary-container/10 hover:text-white'
+                        ? 'text-surface-variant/70 hover:text-surface-variant'
+                        : 'text-on-surface bg-primary-container/5 hover:bg-primary-container/10 hover:text-surface-variant'
             ]">
             <div class="flex items-center gap-3">
                 {{ item.title }}
