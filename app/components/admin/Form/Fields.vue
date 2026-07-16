@@ -126,6 +126,10 @@ defineExpose({ confirmAllEditors, discardAllEditors })
                 </option>
             </select>
 
+            <input v-else-if="field.type === 'date'" v-model="formData[field.name]" type="date" :disabled="isSubmitting"
+                class="w-full bg-surface-container-low border rounded px-4 py-2 text-body-md outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                :class="fieldError(field.name) ? 'border-error focus:border-error' : 'border-outline-variant focus:border-secondary'" />
+
             <label v-else-if="field.type === 'checkbox'" class="flex items-center gap-2"
                 :class="isSubmitting && 'opacity-50 cursor-not-allowed'">
                 <input type="checkbox" v-model="formData[field.name]" :disabled="isSubmitting"

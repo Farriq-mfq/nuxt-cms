@@ -14,6 +14,8 @@ import { pages, pagesRelations } from "./schema/pages";
 import { posts, postCategories, postsRelations } from "./schema/posts";
 import { relatedLinks } from "./schema/related-links";
 import { banners, bannersRelations } from "./schema/banners";
+import { announcements, announcementsRelations } from "./schema/announcements";
+import { agenda, agendaRelations } from "./schema/agenda";
 
 export {
   _admins,
@@ -36,4 +38,8 @@ export {
   relatedLinks,
   banners,
   bannersRelations,
+  announcements,
+  announcementsRelations,
+  agenda,
+  agendaRelations,
 };

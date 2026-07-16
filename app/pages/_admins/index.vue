@@ -18,7 +18,8 @@ const statCards = [
     { key: 'post', label: 'Post', icon: 'lucide:sticky-note-plus', color: 'secondary', to: '/_admins/posts' },
     { key: 'pages', label: 'Halaman', icon: 'lucide:file-text', color: 'primary', to: '/_admins/pages' },
     { key: 'albums', label: 'Album', icon: 'lucide:folder-open', color: 'primary', to: '/_admins/albums' },
-    { key: 'menus', label: 'Menu', icon: 'lucide:menu', color: 'secondary', to: '/_admins/menus' },
+    { key: 'agenda', label: 'Agenda', icon: 'lucide:calendar-days', color: 'secondary', to: '/_admins/agenda' },
+    { key: 'announcement', label: 'Pengumuman', icon: 'lucide:megaphone', color: 'secondary', to: '/_admins/announcements' },
 ] as const
 
 const colorClasses: Record<string, string> = {

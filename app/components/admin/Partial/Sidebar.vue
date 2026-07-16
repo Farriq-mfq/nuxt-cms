@@ -22,8 +22,10 @@ const RAW_MENU_ITEMS: MenuItem[] = [
         children: [
             { label: 'Halaman', icon: 'lucide:file-text', to: '/_admins/pages' },
             { label: 'Post', icon: 'lucide:sticky-note-plus', to: '/_admins/posts' },
+            { label: 'Pengumuman', icon: 'lucide:megaphone', to: '/_admins/announcements' }, // ← baru
         ],
     },
+    { label: 'Agenda', icon: 'lucide:calendar-days', to: '/_admins/agenda' },
     {
         label: 'Media',
         icon: 'lucide:image',
