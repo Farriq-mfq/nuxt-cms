@@ -36,7 +36,7 @@ const RAW_MENU_ITEMS: MenuItem[] = [
     { label: 'Related Link', icon: 'lucide:link', to: '/_admins/related-links' },
     { label: 'Admin', icon: 'lucide:users', to: '/_admins/admins', resource: 'admin' },
     { label: 'Preview Website', icon: 'lucide:globe', to: '/' },
-    { label: 'Setting', icon: 'lucide:settings', to: '/_admins/setting', resource: 'setting' },
+    { label: 'Pengaturan', icon: 'lucide:settings', to: '/_admins/setting', resource: 'setting' },
 ]
 
 const EXACT_MATCH_PATHS = ['/_admins', '/']
@@ -47,7 +47,6 @@ const { user } = useUserSession()
 
 const openGroups = ref<Set<string>>(new Set())
 
-// Permission matrix — konsisten dengan server/utils/permissions.ts
 const PERMISSION_MATRIX: Record<string, string[]> = {
     superadmin: ['setting', 'menu', 'admin'],
     admin: ['setting', 'menu'],
@@ -55,12 +54,11 @@ const PERMISSION_MATRIX: Record<string, string[]> = {
 }
 
 function canAccess(resource?: MenuItem['resource']): boolean {
-    if (!resource) return true // item tanpa `resource` = tidak dibatasi, tampil untuk semua role
+    if (!resource) return true
     const role = user.value?.role ?? 'editor'
     return PERMISSION_MATRIX[role]?.includes(resource) ?? false
 }
 
-// Filter menuItems sesuai role — item & children yang tidak boleh diakses otomatis hilang dari sidebar
 const menuItems = computed<MenuItem[]>(() => {
     return RAW_MENU_ITEMS
         .filter((item) => canAccess(item.resource))
@@ -69,7 +67,7 @@ const menuItems = computed<MenuItem[]>(() => {
             const filteredChildren = item.children.filter((child) => canAccess(child.resource))
             return { ...item, children: filteredChildren }
         })
-        .filter((item) => !item.children || item.children.length > 0) // buang grup yang jadi kosong setelah difilter
+        .filter((item) => !item.children || item.children.length > 0)
 })
 
 function isActive(to?: string): boolean {
@@ -144,7 +142,7 @@ watchEffect(() => {
                         ]" @click="toggleGroup(item.label)">
                         <Icon :name="item.icon ?? 'lucide:circle'" size="18" class="shrink-0" />
                         <span v-if="isOpen" class="flex-1 text-left surfacespace-nowrap overflow-hidden">{{ item.label
-                            }}</span>
+                        }}</span>
                         <Icon v-if="isOpen" name="lucide:chevron-right" size="16" class="transition-transform shrink-0"
                             :class="isGroupOpen(item) && 'rotate-90'" />
                     </button>

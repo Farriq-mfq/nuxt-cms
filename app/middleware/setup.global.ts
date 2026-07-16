@@ -1,5 +1,12 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  if (to.path.startsWith("/api") || to.path.startsWith("/_")) return;
+  const isExempt =
+    to.path.startsWith("/api") ||
+    to.path.startsWith("/_") ||
+    to.path === "/setup" ||
+    to.path === "/maintenance" ||
+    to.path.startsWith("/_admins");
+
+  if (isExempt) return;
 
   const setupStatus = useState<{ isComplete: boolean } | null>(
     "setup-status",
@@ -14,7 +21,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       }>("/api/setup/status");
       setupStatus.value = { isComplete: res.data.isComplete };
     } catch {
-      setupStatus.value = { isComplete: false };
+      setupStatus.value = { isComplete: true };
     }
   }
 

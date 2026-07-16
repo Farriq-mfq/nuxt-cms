@@ -1,7 +1,5 @@
 <script setup lang="ts">
-
 const route = useRoute()
-
 </script>
 <template>
     <div class="min-h-screen flex flex-col bg-background text-on-background">
