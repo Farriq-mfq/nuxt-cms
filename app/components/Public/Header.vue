@@ -16,6 +16,7 @@ const router = useRouter()
 const route = useRoute()
 
 const openMobileGroups = ref<Set<number>>(new Set())
+const isAnyPopoverOpen = ref(false)
 
 function toggleMobileGroup(id: number) {
     if (openMobileGroups.value.has(id)) {
@@ -43,12 +44,32 @@ onBeforeUnmount(() => {
     window.removeEventListener('scroll', handleScroll)
 })
 
-const isTransparent = computed(() => props.enableTransparent && !isScrolled.value && !isMobileMenuOpen.value && !isSearchOpen.value)
+watch(() => route.path, async () => {
+    isMobileMenuOpen.value = false
+    isSearchOpen.value = false
+    isAnyPopoverOpen.value = false
+    openMobileGroups.value = new Set()
+
+    await nextTick()
+    handleScroll()
+})
+
+const isTransparent = computed(() =>
+    props.enableTransparent
+    && !isScrolled.value
+    && !isMobileMenuOpen.value
+    && !isSearchOpen.value
+    && !isAnyPopoverOpen.value
+)
 
 watch(isMobileMenuOpen, (open) => {
     document.body.style.overflow = open ? 'hidden' : ''
     if (!open) openMobileGroups.value = new Set()
 })
+
+function handlePopoverToggle(open: boolean) {
+    isAnyPopoverOpen.value = open
+}
 
 async function openSearch() {
     isSearchOpen.value = true
@@ -95,7 +116,8 @@ function handleSearchKeydown(event: KeyboardEvent) {
                         Beranda
                     </NuxtLink>
 
-                    <PublicNavItem v-for="item in menu" :key="item.id" :item="item" :depth="0" />
+                    <PublicNavItem v-for="item in menu" :key="item.id" :item="item" :depth="0"
+                        @open-panel="({ open }) => handlePopoverToggle(open)" />
                 </nav>
 
                 <div class="flex items-center gap-2 lg:gap-1 shrink-0 lg:justify-self-end">

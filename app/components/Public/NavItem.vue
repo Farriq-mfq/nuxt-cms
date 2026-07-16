@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from '#imports'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
@@ -17,9 +17,25 @@ const props = defineProps<{
     depth: number
 }>()
 
-const emit = defineEmits<{ (e: 'navigate'): void }>()
+const emit = defineEmits<{
+    (e: 'navigate'): void
+    (e: 'openPanel', payload: { open: boolean; item: NavItem }): void
+}>()
 
 const route = useRoute()
+
+const panelOpen = ref(false)
+
+function syncPanelOpen(value: boolean) {
+    if (value !== panelOpen.value) {
+        panelOpen.value = value
+    }
+    return ''
+}
+
+watch(panelOpen, (value) => {
+    emit('openPanel', { open: value, item: props.item })
+})
 
 function menuHref(item: NavItem): string {
     return item.url || `/${item.slug ?? ''}`
@@ -81,7 +97,9 @@ const columns = computed(() => {
         <Icon v-if="item.target === '_blank'" name="lucide:square-arrow-out-up-right" size="14" />
     </NuxtLink>
 
-    <Popover v-else class="relative" :class="depth > 0 && 'w-full'">
+    <Popover v-else v-slot="{ open }" class="relative" :class="depth > 0 && 'w-full'">
+        <span class="hidden">{{ syncPanelOpen(open) }}</span>
+
         <PopoverButton
             class="flex items-center gap-1 transition-colors whitespace-nowrap w-full focus:text-surface-variant"
             :class="[
@@ -117,13 +135,13 @@ const columns = computed(() => {
                     :style="{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }">
                     <div v-for="(column, colIndex) in columns" :key="colIndex" class="space-y-1">
                         <PublicNavItem v-for="child in column" :key="child.id" :item="child" :depth="depth + 1"
-                            @navigate="handleNavigate" />
+                            @navigate="handleNavigate" @open-panel="(p) => emit('openPanel', p)" />
                     </div>
                 </div>
 
                 <div v-else class="flex flex-col min-w-full">
                     <PublicNavItem v-for="child in item.children" :key="child.id" :item="child" :depth="depth + 1"
-                        @navigate="handleNavigate" />
+                        @navigate="handleNavigate" @open-panel="(p) => emit('openPanel', p)" />
                 </div>
             </PopoverPanel>
         </transition>
