@@ -63,7 +63,7 @@ async function handleShare() {
                             class="text-display-lg-mobile lg:text-display-lg text-on-surface font-extrabold leading-tight mt-1">
                             {{ item.title }}
                         </h1>
-                        <p class="text-body-md text-on-surface-variant mt-1 max-w-2xl">
+                        <p class="text-body-md text-on-surface-variant mt-1 max-w-2xl break-words">
                             {{ item.excerpt }}
                         </p>
                     </div>
