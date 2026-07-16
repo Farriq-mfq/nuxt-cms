@@ -41,3 +41,15 @@
    1. Card Berita dibuat full thumbnail dengan title di atas thumbnail
    2. Card Galeri dibuat full thumbnail dengan title di atas thumbnail
    3. Pada Bagian Berita Baru di bagi menjadi 2 kolom berita baru 2 dan lanjutan berita baru tanpa foto hanya list berita baru tanpa foto 
+
+
+# Tambah dan Modifikasi Fitur
+1. Mengganti entitas berita jadi posts
+3. mengganti kategori berita jadi kategori post 
+   1. misal /post/{kategori}/{slug}
+   2. misal /post/{kategori} -> menampilkan semua post dari kategori tersebut
+4. mengganti berita jadi post
+5. menambahkan management agenda atau event admin
+6. menambahkan management popup admin
+7. menambahkan album video berbasis iframe youtube atau yang lain
+8. menambahkan fitur download center

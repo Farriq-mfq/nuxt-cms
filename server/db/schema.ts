@@ -11,7 +11,7 @@ import {
 } from "./schema/album-gallery";
 
 import { pages, pagesRelations } from "./schema/pages";
-import { news, newsCategories, newsRelations } from "./schema/news";
+import { posts, postCategories, postsRelations } from "./schema/posts";
 import { relatedLinks } from "./schema/related-links";
 import { banners, bannersRelations } from "./schema/banners";
 
@@ -28,9 +28,9 @@ export {
   galleriesRelations,
   pages,
   pagesRelations,
-  news,
-  newsCategories,
-  newsRelations,
+  posts,
+  postCategories,
+  postsRelations,
   imagesRelations,
   filesRelations,
   relatedLinks,

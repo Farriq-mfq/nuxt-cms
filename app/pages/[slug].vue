@@ -91,20 +91,16 @@ function scrollToHeading(id: string) {
 
 
 
-const isCopied = ref(false)
-async function handleShare() {
-    if (import.meta.client) {
-        await navigator.clipboard.writeText(window.location.href)
-        isCopied.value = true
-        setTimeout(() => (isCopied.value = false), 2000)
-    }
-}
 </script>
 
 <template>
     <div v-if="page">
         <PublicContainer>
-            <header>
+            <PublicBreadcrumb :items="[{
+                label: page.title,
+                to: `/${page.slug}`
+            }]" />
+            <header class="mt-lg">
                 <div class="flex items-start gap-4">
                     <div class="w-1 shrink-0 bg-secondary self-stretch min-h-[3.5rem]"></div>
                     <div>
@@ -121,11 +117,7 @@ async function handleShare() {
                         <Icon name="lucide:calendar-clock" size="14" />
                         Diperbarui {{ format(page.updatedAt, 'dd MMMM yyyy', { locale: id }) }}
                     </span>
-                    <button class="flex items-center gap-1.5 hover:text-secondary transition-colors"
-                        @click="handleShare">
-                        <Icon :name="isCopied ? 'lucide:check' : 'lucide:link'" size="14" />
-                        {{ isCopied ? 'Tersalin' : 'Bagikan' }}
-                    </button>
+                    <PublicShareOn :title="page.title" :url="page.path" />
                 </div>
             </header>
             <PublicHr class="sm:hidden" />

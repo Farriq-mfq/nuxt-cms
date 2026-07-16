@@ -12,16 +12,16 @@ const RAW_MENU_ITEMS: MenuItem[] = [
     { label: 'Menu', icon: 'lucide:menu', to: '/_admins/menus', resource: 'menu' },
     { label: 'Banner', icon: 'lucide:image', to: '/_admins/banners' },
     {
-        label: "Kategori Berita",
+        label: "Kategori Post",
         icon: "lucide:list-tree",
-        to: "/_admins/news-categories"
+        to: "/_admins/posts-categories"
     },
     {
         label: 'Konten',
         icon: 'lucide:file-text',
         children: [
             { label: 'Halaman', icon: 'lucide:file-text', to: '/_admins/pages' },
-            { label: 'Berita', icon: 'lucide:newspaper', to: '/_admins/news' },
+            { label: 'Post', icon: 'lucide:sticky-note-plus', to: '/_admins/posts' },
         ],
     },
     {
@@ -142,7 +142,7 @@ watchEffect(() => {
                         ]" @click="toggleGroup(item.label)">
                         <Icon :name="item.icon ?? 'lucide:circle'" size="18" class="shrink-0" />
                         <span v-if="isOpen" class="flex-1 text-left surfacespace-nowrap overflow-hidden">{{ item.label
-                        }}</span>
+                            }}</span>
                         <Icon v-if="isOpen" name="lucide:chevron-right" size="16" class="transition-transform shrink-0"
                             :class="isGroupOpen(item) && 'rotate-90'" />
                     </button>

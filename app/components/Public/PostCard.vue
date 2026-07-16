@@ -1,0 +1,43 @@
+<script setup lang="ts">
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
+defineProps<{
+    post: {
+        id: number
+        title: string
+        slug: string
+        publishedAt: string | null
+        category: { name: string } | null
+        thumbnail: { path: string } | null
+    }
+}>()
+
+</script>
+
+<template>
+    <NuxtLink :to="`/post/${post.slug}`"
+        class="group relative block aspect-[4/3] rounded overflow-hidden bg-surface-container shadow-layer-1 hover:shadow-layer-2 transition-shadow">
+        <img v-if="post.thumbnail" :src="post.thumbnail.path" :alt="post.title"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+        <div v-else class="w-full h-full flex items-center justify-center bg-surface-container">
+            <Icon name="lucide:image" size="32" class="text-on-surface-variant opacity-40" />
+        </div>
+
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-4">
+            <div v-if="post.category"
+                class="inline-flex self-start bg-secondary text-on-secondary text-label-md rounded-full px-2.5 py-0.5 mb-2">
+                {{ post.category.name }}
+            </div>
+
+            <h3 class="text-body-lg font-semibold text-white leading-snug line-clamp-2">
+                {{ post.title }}
+            </h3>
+
+            <div class="flex items-center gap-1.5 text-label-md text-white/70 mt-2">
+                <Icon name="lucide:calendar" size="12" />
+                {{ format(post.publishedAt, 'dd MMMM yyyy', { locale: id }) }}
+            </div>
+        </div>
+    </NuxtLink>
+</template>

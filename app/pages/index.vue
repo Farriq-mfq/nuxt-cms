@@ -6,7 +6,7 @@
         <!-- <PublicBannerCarousel /> -->
         <PublicContainer>
             <PublicHr />
-            <PublicHomeLatestNews />
+            <PublicHomeLatestPost />
             <PublicHr />
             <PublicHomeGalleryPreview />
             <PublicHr />
