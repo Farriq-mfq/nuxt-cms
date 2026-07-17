@@ -1,5 +1,5 @@
 export interface DashboardStats {
-  news: number;
+  post: number;
   pages: number;
   announcements: number;
   menus: number;
@@ -7,7 +7,7 @@ export interface DashboardStats {
 
 export interface DashboardData {
   stats: DashboardStats;
-  recentNews: Array<{
+  recentPost: Array<{
     id: number;
     title: string;
     isPublished: boolean;

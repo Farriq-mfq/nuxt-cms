@@ -10,25 +10,29 @@ interface MenuItem {
 const RAW_MENU_ITEMS: MenuItem[] = [
     { label: 'Dashboard', icon: 'lucide:layout-dashboard', to: '/_admins' },
     { label: 'Menu', icon: 'lucide:menu', to: '/_admins/menus', resource: 'menu' },
-    { label: 'Banner', icon: 'lucide:image', to: '/_admins/banners' },
+    { label: 'Banner / Slider', icon: 'lucide:image', to: '/_admins/banners' },
+    { label: 'Popup', icon: 'lucide:message-circle', to: '/_admins/popups' },
     {
-        label: "Kategori Berita",
+        label: "Kategori Post",
         icon: "lucide:list-tree",
-        to: "/_admins/news-categories"
+        to: "/_admins/posts-categories"
     },
     {
         label: 'Konten',
         icon: 'lucide:file-text',
         children: [
             { label: 'Halaman', icon: 'lucide:file-text', to: '/_admins/pages' },
-            { label: 'Berita', icon: 'lucide:newspaper', to: '/_admins/news' },
+            { label: 'Post', icon: 'lucide:sticky-note-plus', to: '/_admins/posts' },
+            { label: 'Pengumuman', icon: 'lucide:megaphone', to: '/_admins/announcements' }, // ← baru
         ],
     },
+    { label: 'Agenda', icon: 'lucide:calendar-days', to: '/_admins/agenda' },
     {
         label: 'Media',
         icon: 'lucide:image',
         children: [
             { label: 'Gambar', icon: 'lucide:image', to: '/_admins/images' },
+            { label: 'Video', icon: 'lucide:video', to: '/_admins/video-albums' },
             { label: 'File', icon: 'lucide:file', to: '/_admins/files' },
             { label: 'Albums', icon: 'lucide:folder-open', to: '/_admins/albums' },
         ],

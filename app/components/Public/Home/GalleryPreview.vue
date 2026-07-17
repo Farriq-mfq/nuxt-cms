@@ -17,7 +17,7 @@ const rest = computed(() => albumsList.value.slice(1))
             <div class="flex items-start gap-4">
                 <div class="w-1 shrink-0 bg-secondary self-stretch min-h-[3rem]"></div>
                 <div>
-                    <h2 class="text-headline-lg text-on-surface mt-1">Galeri</h2>
+                    <h2 class="text-headline-lg text-on-surface mt-1">Album Foto Terbaru</h2>
                 </div>
             </div>
             <NuxtLink to="/galeri"

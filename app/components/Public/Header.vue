@@ -85,7 +85,7 @@ function closeSearch() {
 
 function submitSearch() {
     if (!searchQuery.value.trim()) return
-    router.push({ path: '/berita', query: { search: searchQuery.value.trim() } })
+    router.push({ path: '/post', query: { search: searchQuery.value.trim() } })
     closeSearch()
 }
 
@@ -123,7 +123,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
                 <div class="flex items-center gap-2 lg:gap-1 shrink-0 lg:justify-self-end">
                     <button
                         class="hidden lg:flex p-2 rounded text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-colors"
-                        title="Cari Berita" @click="openSearch">
+                        title="Cari Post" @click="openSearch">
                         <Icon name="lucide:search" size="18" />
                     </button>
 
@@ -173,7 +173,7 @@ function handleSearchKeydown(event: KeyboardEvent) {
                 <div class="w-full max-w-xl bg-surface rounded shadow-layer-2 p-4">
                     <div class="flex items-center gap-3">
                         <Icon name="lucide:search" size="20" class="text-on-surface-variant shrink-0" />
-                        <input ref="searchInputRef" v-model="searchQuery" type="text" placeholder="Cari berita..."
+                        <input ref="searchInputRef" v-model="searchQuery" type="text" placeholder="Cari post..."
                             class="flex-1 bg-transparent outline-none text-body-lg text-on-surface min-w-0"
                             @keyup.enter="submitSearch" @keydown="handleSearchKeydown" />
                         <button class="text-on-surface-variant hover:text-on-surface transition-colors shrink-0"

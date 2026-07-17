@@ -5,8 +5,8 @@
         <PublicFullBannerCarousel />
         <!-- <PublicBannerCarousel /> -->
         <PublicContainer>
-            <PublicHr />
-            <PublicHomeLatestNews />
+            <div class="mt-lg"></div>
+            <PublicHomeLatestPost />
             <PublicHr />
             <PublicHomeGalleryPreview />
             <PublicHr />

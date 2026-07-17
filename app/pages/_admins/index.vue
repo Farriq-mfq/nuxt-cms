@@ -12,13 +12,14 @@ const { user } = useUserSession()
 const { data, pending } = await useAsyncData('dashboard', () => getDashboard())
 
 const stats = computed(() => data.value?.data?.stats)
-const recentNews = computed(() => data.value?.data?.recentNews ?? [])
+const recentPost = computed(() => data.value?.data?.recentPost ?? [])
 
 const statCards = [
-    { key: 'news', label: 'Berita', icon: 'lucide:newspaper', color: 'secondary', to: '/_admins/news' },
+    { key: 'post', label: 'Post', icon: 'lucide:sticky-note-plus', color: 'secondary', to: '/_admins/posts' },
     { key: 'pages', label: 'Halaman', icon: 'lucide:file-text', color: 'primary', to: '/_admins/pages' },
     { key: 'albums', label: 'Album', icon: 'lucide:folder-open', color: 'primary', to: '/_admins/albums' },
-    { key: 'menus', label: 'Menu', icon: 'lucide:menu', color: 'secondary', to: '/_admins/menus' },
+    { key: 'agenda', label: 'Agenda', icon: 'lucide:calendar-days', color: 'secondary', to: '/_admins/agenda' },
+    { key: 'announcement', label: 'Pengumuman', icon: 'lucide:megaphone', color: 'secondary', to: '/_admins/announcements' },
 ] as const
 
 const colorClasses: Record<string, string> = {
@@ -36,7 +37,7 @@ const greeting = computed(() => {
 })
 
 const quickActions = [
-    { label: 'Tambah Berita', icon: 'lucide:newspaper', to: '/_admins/news' },
+    { label: 'Tambah Post', icon: 'lucide:sticky-note-plus', to: '/_admins/posts' },
     { label: 'Tambah Halaman', icon: 'lucide:file-text', to: '/_admins/pages' },
     { label: 'Tambah Menu', icon: 'lucide:menu', to: '/_admins/menus' },
     { label: 'Pengaturan', icon: 'lucide:settings', to: '/_admins/setting' },
@@ -79,8 +80,8 @@ const quickActions = [
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
             <div class="lg:col-span-2 bg-surface border border-outline-variant rounded shadow-layer-1 overflow-hidden">
                 <div class="flex items-center justify-between px-md py-sm border-b border-outline-variant">
-                    <h2 class="text-headline-md text-on-surface">Berita Terbaru</h2>
-                    <NuxtLink to="/_admins/news"
+                    <h2 class="text-headline-md text-on-surface">Post Terbaru</h2>
+                    <NuxtLink to="/_admins/posts"
                         class="text-label-md text-secondary hover:underline flex items-center gap-1">
                         Lihat semua
                         <Icon name="lucide:arrow-right" size="12" />
@@ -91,15 +92,15 @@ const quickActions = [
                     <div v-for="i in 3" :key="i" class="h-14 bg-surface-container-low rounded animate-pulse" />
                 </div>
 
-                <div v-else-if="!recentNews.length"
+                <div v-else-if="!recentPost.length"
                     class="flex flex-col items-center justify-center gap-2 py-lg text-on-surface-variant">
                     <Icon name="lucide:inbox" size="28" class="opacity-50" />
-                    <span class="text-body-md">Belum ada berita</span>
+                    <span class="text-body-md">Belum ada post</span>
                 </div>
 
                 <ul v-else class="divide-y divide-outline-variant">
-                    <li v-for="item in recentNews" :key="item.id">
-                        <NuxtLink to="/_admins/news"
+                    <li v-for="item in recentPost" :key="item.id">
+                        <NuxtLink to="/_admins/posts"
                             class="flex items-center gap-3 px-md py-sm hover:bg-surface-container-low transition-colors">
                             <div
                                 class="w-10 h-10 rounded bg-surface-container-low overflow-hidden shrink-0 flex items-center justify-center">

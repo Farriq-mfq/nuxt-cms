@@ -11,9 +11,18 @@ import {
 } from "./schema/album-gallery";
 
 import { pages, pagesRelations } from "./schema/pages";
-import { news, newsCategories, newsRelations } from "./schema/news";
+import { posts, postCategories, postsRelations } from "./schema/posts";
 import { relatedLinks } from "./schema/related-links";
 import { banners, bannersRelations } from "./schema/banners";
+import { announcements, announcementsRelations } from "./schema/announcements";
+import { agenda, agendaRelations } from "./schema/agenda";
+import { popups, popupsRelations } from "./schema/popups";
+import {
+  videoAlbums,
+  videoAlbumsRelations,
+  videos,
+  videosRelations,
+} from "./schema/video-albums";
 
 export {
   _admins,
@@ -28,12 +37,22 @@ export {
   galleriesRelations,
   pages,
   pagesRelations,
-  news,
-  newsCategories,
-  newsRelations,
+  posts,
+  postCategories,
+  postsRelations,
   imagesRelations,
   filesRelations,
   relatedLinks,
   banners,
   bannersRelations,
+  announcements,
+  announcementsRelations,
+  agenda,
+  agendaRelations,
+  popups,
+  popupsRelations,
+  videoAlbums,
+  videoAlbumsRelations,
+  videos,
+  videosRelations,
 };

@@ -1,26 +1,32 @@
 import { count, desc, eq } from "drizzle-orm";
 import { db } from "~~/server/db";
-import { news, pages, menus, albums } from "~~/server/db/schema";
+import {
+  posts,
+  pages,
+  menus,
+  albums,
+  announcements,
+  agenda,
+} from "~~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
   const [
-    newsCountResult,
+    postsCountResult,
     pagesCountResult,
     menusCountResult,
     albumsCountResult,
-    recentNews,
+    agendaCountResult,
+    announcementsCountResult,
+    recentPost,
   ] = await Promise.all([
-    db.select({ count: count() }).from(news),
+    db.select({ count: count() }).from(posts),
     db.select({ count: count() }).from(pages),
     db.select({ count: count() }).from(menus),
-    db
-      .select({
-        count: count(),
-      })
-      .from(albums)
-      .where(eq(albums.isActive, true)),
-    db.query.news.findMany({
-      orderBy: desc(news.createdAt),
+    db.select({ count: count() }).from(albums),
+    db.select({ counte: count() }).from(agenda),
+    db.select({ counte: count() }).from(announcements),
+    db.query.posts.findMany({
+      orderBy: desc(posts.createdAt),
       limit: 5,
       with: {
         thumbnail: true,
@@ -31,12 +37,14 @@ export default defineEventHandler(async (event) => {
   return successResponse(
     {
       stats: {
-        news: newsCountResult[0]?.count ?? 0,
+        posts: postsCountResult[0]?.count ?? 0,
         pages: pagesCountResult[0]?.count ?? 0,
         menus: menusCountResult[0]?.count ?? 0,
         albums: albumsCountResult[0]?.count ?? 0,
+        agenda: agendaCountResult[0]?.counte ?? 0,
+        announcements: announcementsCountResult[0]?.counte ?? 0,
       },
-      recentNews,
+      recentPost,
     },
     "Data dashboard berhasil diambil",
   );

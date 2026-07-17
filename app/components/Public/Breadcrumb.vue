@@ -2,27 +2,40 @@
 interface BreadcrumbItem {
     label: string
     to?: string
+    icon?: string
 }
 
-defineProps<{
+const props = defineProps<{
     items: BreadcrumbItem[]
 }>()
+
+const allItems = computed<BreadcrumbItem[]>(() => [
+    { label: 'Beranda', to: '/', icon: 'lucide:home' },
+    ...props.items,
+])
 </script>
 
 <template>
     <div class="border-b border-outline-variant bg-surface-container-low">
-        <div class="max-w-6xl mx-auto px-margin py-3">
-            <nav class="flex items-center gap-2 text-label-md text-on-surface-variant overflow-x-auto">
-                <template v-for="(item, index) in items" :key="index">
-                    <NuxtLink v-if="item.to" :to="item.to"
-                        class="hover:text-secondary transition-colors whitespace-nowrap shrink-0">
+        <div class="px-sm py-3">
+            <nav class="flex items-center gap-1.5 text-label-md text-on-surface-variant overflow-x-auto"
+                aria-label="Breadcrumb">
+                <template v-for="(item, index) in allItems" :key="index">
+                    <NuxtLink v-if="item.to && index < allItems.length - 1" :to="item.to"
+                        class="group flex items-center gap-1.5 px-2 py-1 whitespace-nowrap shrink-0 hover:text-secondary transition-colors">
+                        <Icon v-if="item.icon" :name="item.icon" size="14"
+                            class="shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
                         {{ item.label }}
                     </NuxtLink>
-                    <span v-else class="text-on-surface truncate">
-                        {{ item.label }}
+
+                    <span v-else
+                        class="flex items-center gap-1.5 px-2 py-1 whitespace-nowrap shrink-0 text-secondary font-semibold">
+                        <Icon v-if="item.icon" :name="item.icon" size="14" class="shrink-0" />
+                        <span class="truncate max-w-[200px]">{{ item.label }}</span>
                     </span>
 
-                    <Icon v-if="index < items.length - 1" name="lucide:chevron-right" size="12" class="shrink-0" />
+                    <Icon v-if="index < allItems.length - 1" name="lucide:chevron-right" size="13"
+                        class="shrink-0 text-outline-variant" />
                 </template>
             </nav>
         </div>

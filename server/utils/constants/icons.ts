@@ -11,7 +11,7 @@ export const ICONS = [
   { label: "Gambar", value: "lucide:image" },
   { label: "Galeri", value: "lucide:images" },
   { label: "Video", value: "lucide:video" },
-  { label: "Berita", value: "lucide:newspaper" },
+  { label: "Post", value: "lucide:postpaper" },
   { label: "Pengumuman", value: "lucide:megaphone" },
   { label: "Lonceng", value: "lucide:bell" },
   { label: "Kalender", value: "lucide:calendar" },

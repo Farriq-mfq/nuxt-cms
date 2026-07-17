@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin' })
 useHead({ title: 'Album Galeri' })
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 const router = useRouter()
 const tableRef = ref()
@@ -60,7 +62,7 @@ const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
             </template>
 
             <template #cell-createdAt="{ value }">
-                {{ new Date(value).toLocaleDateString('id-ID') }}
+                {{ format(new Date(value), 'dd MMMM yyyy', { locale: id }) }}
             </template>
 
             <template #cell-actions="{ row }">
