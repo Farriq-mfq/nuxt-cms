@@ -1,8 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin' })
-useHead({ title: 'Album Galeri' })
-import { format } from 'date-fns'
-import { id } from 'date-fns/locale'
+useHead({ title: 'Album Video' })
 
 const router = useRouter()
 const tableRef = ref()
@@ -15,18 +13,17 @@ const columns = [
     { key: 'coverImage', label: 'Cover', width: '64px' },
     { key: 'title', label: 'Judul', sortable: true },
     { key: 'isActive', label: 'Status', align: 'center' as const },
-    { key: 'createdAt', label: 'Dibuat', sortable: true },
     { key: 'actions', label: 'Aksi', align: 'right' as const, width: '140px' },
 ]
 
 const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
-    confirmFn: deleteAlbum,
-    confirmHeader: 'Hapus Album',
-    confirmMessage: 'Semua gambar dalam album ini akan ikut terhapus permanen. Lanjutkan?',
+    confirmFn: deleteVideoAlbum,
+    confirmHeader: 'Hapus Album Video',
+    confirmMessage: 'Semua video dalam album ini akan ikut terhapus. Lanjutkan?',
     confirmLabel: 'Ya, Hapus',
     danger: true,
-    successMessage: 'Album berhasil dihapus',
-    errorMessage: 'Terjadi kesalahan saat menghapus album',
+    successMessage: 'Album video berhasil dihapus',
+    errorMessage: 'Terjadi kesalahan saat menghapus album video',
     onSuccess: handleRefresh,
 })
 </script>
@@ -34,14 +31,14 @@ const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
 <template>
     <div class="space-y-md">
         <div class="flex items-center justify-between">
-            <h1 class="text-headline-lg">Album Galeri</h1>
+            <h1 class="text-headline-lg">Album Video</h1>
         </div>
 
-        <AdminDataTable ref="tableRef" endpoint="/api/_admins/albums" :columns="columns"
-            search-placeholder="Cari album...">
+        <AdminDataTable ref="tableRef" endpoint="/api/_admins/video-albums" :columns="columns"
+            search-placeholder="Cari album video...">
             <template #toolbar>
                 <button class="flex items-center gap-1.5 bg-secondary text-on-secondary rounded px-6 py-3"
-                    @click="router.push('/_admins/albums/create')">
+                    @click="router.push('/_admins/video-albums/create')">
                     <Icon name="lucide:plus" size="16" /> Tambah Album
                 </button>
             </template>
@@ -50,7 +47,7 @@ const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
                 <img v-if="value" :src="value.path"
                     class="w-10 h-10 object-cover rounded border border-outline-variant" />
                 <div v-else class="w-10 h-10 rounded bg-surface-container flex items-center justify-center">
-                    <Icon name="lucide:image" size="16" class="text-on-surface-variant" />
+                    <Icon name="lucide:video" size="16" class="text-on-surface-variant" />
                 </div>
             </template>
 
@@ -61,14 +58,10 @@ const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
                 </span>
             </template>
 
-            <template #cell-createdAt="{ value }">
-                {{ format(new Date(value), 'dd MMMM yyyy', { locale: id }) }}
-            </template>
-
             <template #cell-actions="{ row }">
                 <div class="flex justify-end gap-3">
                     <button class="text-secondary hover:underline text-label-md"
-                        @click="router.push(`/_admins/albums/${row.id}/edit`)">
+                        @click="router.push(`/_admins/video-albums/${row.id}/edit`)">
                         <Icon name="lucide:pencil" size="18" />
                     </button>
                     <button class="text-error hover:underline text-label-md" :disabled="deleting"

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin' })
 useHead({ title: 'File Manager' })
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 const tableRef = ref()
 const formDialogRef = ref()
@@ -87,7 +89,7 @@ const modes = {
             </template>
 
             <template #cell-createdAt="{ value }">
-                <span class="text-body-md">{{ new Date(value).toLocaleDateString('id-ID') }}</span>
+                <span class="text-body-md">{{ format(new Date(value), 'dd MMMM yyyy', { locale: id }) }}</span>
             </template>
 
             <template #cell-actions="{ row }">

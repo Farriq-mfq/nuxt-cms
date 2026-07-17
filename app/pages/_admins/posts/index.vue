@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin' })
 useHead({ title: 'Post' })
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 const router = useRouter()
 const tableRef = ref()
@@ -57,7 +59,8 @@ const { execute: executeDelete, isPending: deleting } = useConfirmMutation({
             </template>
 
             <template #cell-publishedAt="{ value }">
-                <span class="text-body-md">{{ value ? new Date(value).toLocaleDateString('id-ID') : '—' }}</span>
+                <span class="text-body-md">{{ value ? format(new Date(value), 'dd MMMM yyyy', { locale: id }) : '—'
+                }}</span>
             </template>
 
             <template #cell-actions="{ row }">

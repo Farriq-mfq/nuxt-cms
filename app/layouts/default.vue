@@ -8,5 +8,6 @@ const route = useRoute()
             <slot />
         </main>
         <PublicFooter />
+        <PublicPopup />
     </div>
 </template>

@@ -16,6 +16,13 @@ import { relatedLinks } from "./schema/related-links";
 import { banners, bannersRelations } from "./schema/banners";
 import { announcements, announcementsRelations } from "./schema/announcements";
 import { agenda, agendaRelations } from "./schema/agenda";
+import { popups, popupsRelations } from "./schema/popups";
+import {
+  videoAlbums,
+  videoAlbumsRelations,
+  videos,
+  videosRelations,
+} from "./schema/video-albums";
 
 export {
   _admins,
@@ -42,4 +49,10 @@ export {
   announcementsRelations,
   agenda,
   agendaRelations,
+  popups,
+  popupsRelations,
+  videoAlbums,
+  videoAlbumsRelations,
+  videos,
+  videosRelations,
 };
