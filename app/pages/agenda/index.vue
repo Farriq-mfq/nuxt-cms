@@ -48,7 +48,6 @@ function formatMonth(date: string): string {
             </div>
 
             <template v-else>
-                <!-- Upcoming -->
                 <div v-if="upcoming.length" class="mb-xl">
                     <span
                         class="text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2 mb-3">
@@ -62,7 +61,7 @@ function formatMonth(date: string): string {
                             <div
                                 class="shrink-0 w-16 h-16 rounded bg-secondary-container/30 flex flex-col items-center justify-center">
                                 <span class="text-label-md text-secondary font-semibold">{{ formatMonth(item.startDate)
-                                    }}</span>
+                                }}</span>
                                 <span class="text-headline-md text-secondary font-bold leading-none">{{
                                     formatDay(item.startDate) }}</span>
                             </div>
@@ -76,7 +75,8 @@ function formatMonth(date: string): string {
                                     class="flex flex-wrap items-center gap-3 text-label-md text-on-surface-variant mt-1.5">
                                     <span class="flex items-center gap-1">
                                         <Icon name="lucide:calendar" size="12" />
-                                        {{ formatDate(item.startDate) }}
+                                        {{ formatDate(item.startDate) }} {{ item.endDate ? `-
+                                        ${formatDate(item.endDate)}` : '' }}
                                     </span>
                                     <span v-if="item.location" class="flex items-center gap-1">
                                         <Icon name="lucide:map-pin" size="12" />
@@ -91,7 +91,6 @@ function formatMonth(date: string): string {
                     </div>
                 </div>
 
-                <!-- Past -->
                 <div v-if="past.length">
                     <span
                         class="text-label-md uppercase tracking-widest text-on-surface-variant flex items-center gap-2 mb-3">

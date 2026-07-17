@@ -47,13 +47,13 @@ function formatTime(date: string): string {
                 <div class="flex flex-wrap items-center gap-4 mt-md text-body-md text-on-surface-variant">
                     <span class="flex items-center gap-2">
                         <Icon name="lucide:calendar" size="16" class="text-secondary" />
-                        {{ formatDate(item.startDate) }}
+                        {{ formatDate(item.startDate) }} {{ item.endDate ? `- ${formatDate(item.endDate)}` : '' }}
                     </span>
-                    <span class="flex items-center gap-2">
+                    <!-- <span class="flex items-center gap-2">
                         <Icon name="lucide:clock" size="16" class="text-secondary" />
                         {{ formatTime(item.startDate) }}<template v-if="item.endDate"> - {{ formatTime(item.endDate)
                         }}</template>
-                    </span>
+</span> -->
                     <span v-if="item.location" class="flex items-center gap-2">
                         <Icon name="lucide:map-pin" size="16" class="text-secondary" />
                         {{ item.location }}
