@@ -9,5 +9,6 @@ const route = useRoute()
         </main>
         <PublicFooter />
         <PublicPopup />
+        <PublicBackToTop />
     </div>
 </template>

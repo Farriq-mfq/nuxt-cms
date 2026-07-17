@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /_admins
-Disallow: /_admins/
 Sitemap: /sitemap.xml

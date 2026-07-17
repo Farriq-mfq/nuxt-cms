@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin' })
 useHead({ title: 'Media Library' })
+import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 
 const tableRef = ref()
 const formDialogRef = ref()
